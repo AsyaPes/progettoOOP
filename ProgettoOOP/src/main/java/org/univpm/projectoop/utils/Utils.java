@@ -13,6 +13,9 @@ import java.nio.file.StandardCopyOption;
 
 
 public class Utils {
+	
+	URLConnection openConnection = new URL("https://ec.europa.eu/eurostat/estat-navtree-portlet-prod/BulkDownloadListing?file=data/nrg_ind_342m.tsv.gz&unzip=true").openConnection();
+    InputStream in = openConnection.getInputStream();
 
  
     public static JSONObject getJSONFromURL(String url) throws IOException, ParseException {
@@ -20,6 +23,7 @@ public class Utils {
         int currentChar;
         try(InputStream is = new URL(url).openStream()) {
             BufferedReader br = new BufferedReader(new InputStreamReader(is));
+            //ReadLine
             while ((currentChar = br.read()) != -1){
                 sb.append((char) currentChar);
             }
@@ -32,15 +36,15 @@ public class Utils {
         }
     }
 
-    public static void downloadCSVfromJSON(JSONObject json){
+    public static void downloadTSVfromJSON(JSONObject json){
         JSONObject result = (JSONObject) json.get("result");
         JSONArray data = (JSONArray) result.get("resources");
         for(Object resource : data){
             if(resource instanceof JSONObject){
                 JSONObject jsonResource = (JSONObject) resource;
-                if(((String)jsonResource.get("format")).contains("CSV")){
+                if(((String)jsonResource.get("format")).contains("TSV")){
                     try {
-                        downloadCSVFromURL(((String)jsonResource.get("url")));
+                        downloadTSVFromURL(((String)jsonResource.get("url")));
                     } catch (IOException e) {
                         System.out.println(e.toString());
                     }
@@ -51,13 +55,14 @@ public class Utils {
     }
 
 
-    private static void downloadCSVFromURL(String url) throws IOException{
-        if(!Files.exists(Paths.get("data.csv"))){
+    private static void downloadTSVFromURL(String url) throws IOException{
+        if(!Files.exists(Paths.get("data.tsv"))){
             InputStream is = new URL(url).openStream();
-            Files.copy(is, Paths.get("data.csv"), StandardCopyOption.REPLACE_EXISTING);
+            Files.copy(is, Paths.get("data.tsv"), StandardCopyOption.REPLACE_EXISTING);
         } else {
-            System.out.println("Il file CSV è già stato scaricato!");
+            System.out.println("Il file TSV è già stato scaricato!");
         }
     }
 
 }
+
