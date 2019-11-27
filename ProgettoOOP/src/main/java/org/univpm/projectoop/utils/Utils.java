@@ -6,7 +6,9 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 import java.io.*;
+import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLConnection;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
@@ -14,10 +16,20 @@ import java.nio.file.StandardCopyOption;
 
 public class Utils {
 	
-	URLConnection openConnection = new URL("https://ec.europa.eu/eurostat/estat-navtree-portlet-prod/BulkDownloadListing?file=data/nrg_ind_342m.tsv.gz&unzip=true").openConnection();
-    InputStream in = openConnection.getInputStream();
+	public static URLConnection openConnection;
+	public static InputStream in;
 
+    public static void openConnection() throws IOException
+    {
+		openConnection = new URL("https://ec.europa.eu/eurostat/estat-navtree-portlet-prod/BulkDownloadListing?file=data/nrg_ind_342m.tsv.gz&unzip=true").openConnection();
+		in = openConnection.getInputStream();
+    }
  
+	public static void closeConnection() throws IOException
+	{
+		in.close();
+	}
+
     public static JSONObject getJSONFromURL(String url) throws IOException, ParseException {
         StringBuilder sb = new StringBuilder();
         int currentChar;
@@ -60,7 +72,7 @@ public class Utils {
             InputStream is = new URL(url).openStream();
             Files.copy(is, Paths.get("data.tsv"), StandardCopyOption.REPLACE_EXISTING);
         } else {
-            System.out.println("Il file TSV è già stato scaricato!");
+            System.out.println("Il file TSV � già stato scaricato!");
         }
     }
 
