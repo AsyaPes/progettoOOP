@@ -6,6 +6,7 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 import java.io.*;
+import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
@@ -69,7 +70,13 @@ public class Utils {
 
     private static void downloadTSVFromURL(String url) throws IOException{
         if(!Files.exists(Paths.get("data.tsv"))){
-            InputStream is = new URL(url).openStream();
+        	
+        	URL urlObject = new URL(url);
+        	HttpURLConnection connection = (HttpURLConnection)urlObject.openConnection();
+        	connection.setFollowRedirects(true);
+            InputStream is = connection.getInputStream();
+            
+            
             Files.copy(is, Paths.get("data.tsv"), StandardCopyOption.REPLACE_EXISTING);
         } else {
             System.out.println("Il file TSV � già stato scaricato!");
