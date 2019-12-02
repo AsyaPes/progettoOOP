@@ -73,7 +73,7 @@ public class Utils {
         	
         	URL urlObject = new URL(url);
         	HttpURLConnection connection = (HttpURLConnection)urlObject.openConnection();
-        	connection.setFollowRedirects(true);
+        	HttpURLConnection.setFollowRedirects(true);
             InputStream is = connection.getInputStream();
             
             
