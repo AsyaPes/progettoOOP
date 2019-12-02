@@ -5,6 +5,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.web.server.ResponseStatusException;
 import org.univpm.projectoop.dataset.Stock;
 
 public class FilterNumber {
@@ -15,6 +17,7 @@ public class FilterNumber {
 	private double max;
 	private double dev_std;
 	private int count;
+
 	
 	 private static boolean isInteger(String field) {
 	        try {
@@ -40,8 +43,9 @@ public class FilterNumber {
 	                m = Stock.class.getMethod("get"+field.substring(0, 1).toUpperCase()+field.substring(1),null);
 	                Object doubleValue = m.invoke(Stocks.get(i));
 	                value_array[i] = (double) doubleValue;
-	            } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
+	            }catch (ClassCastException e) {
 	                e.printStackTrace();
+	                throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Il formato non è corretto"); 
 	            }
 			    	
 			    }

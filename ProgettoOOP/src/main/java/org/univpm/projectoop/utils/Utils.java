@@ -64,7 +64,6 @@ public class Utils {
                 }
             }
         }
-
     }
 
 
@@ -76,12 +75,11 @@ public class Utils {
         	HttpURLConnection.setFollowRedirects(true);
             InputStream is = connection.getInputStream();
             
-            
             Files.copy(is, Paths.get("data.tsv"), StandardCopyOption.REPLACE_EXISTING);
+            System.out.println("FILE SCARICATO");
         } else {
-            System.out.println("Il file TSV � già stato scaricato!");
+            System.out.println("Il file TSV è già stato scaricato!");
         }
     }
-
 }
 
