@@ -48,6 +48,7 @@ public class FilterNumber {
 			}
 		}
 
+	//set
 	    setAvg(value_array);
 		setSum(value_array);
 		setMin(value_array);
