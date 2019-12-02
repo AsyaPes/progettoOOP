@@ -15,7 +15,7 @@ public class FilterString {
 	private float percent;
 	
 	
-	public FilterString(ArrayList<Stock> Stocks,String text,String field) throws IOException {
+	public FilterString(ArrayList<Stock> Stocks,String text,String field) throws Exception {
 		
 		this.count=Stocks.size();
 		this.text=text;
@@ -30,7 +30,7 @@ public class FilterString {
 			Method m = null;
 			try {
 				m = Stock.class.getMethod("get"+field.substring(0, 1).toUpperCase()+field.substring(1),null);
-                Object string = m.invoke(s);
+                Object string = m.invoke(Stocks.get(i));
                 if((text.equals((String) string))){
                     singular++;
                 }

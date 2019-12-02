@@ -72,8 +72,12 @@ public class Utils {
         	
         	URL urlObject = new URL(url);
         	HttpURLConnection connection = (HttpURLConnection)urlObject.openConnection();
-        	HttpURLConnection.setFollowRedirects(true);
-            InputStream is = connection.getInputStream();
+        	
+        	url = connection.getHeaderField("Location");
+        	urlObject = new URL(url);
+        	connection = (HttpURLConnection)urlObject.openConnection();
+        	
+        	InputStream is = connection.getInputStream();
             
             Files.copy(is, Paths.get("data.tsv"), StandardCopyOption.REPLACE_EXISTING);
             System.out.println("FILE SCARICATO");

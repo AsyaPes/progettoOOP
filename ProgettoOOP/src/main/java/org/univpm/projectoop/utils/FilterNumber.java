@@ -20,14 +20,15 @@ public class FilterNumber {
 
 	
 	 private static boolean isInteger(String field) {
-	        try {
-	            Integer.parseInt(field);
-	            return true;
-	        } catch (Exception e) {
-	            return false;
-	        }
-	    }
-	public FilterNumber (ArrayList<Stock> Stocks,String field) throws IOException
+        try {
+            Integer.parseInt(field);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+ 
+	public FilterNumber (ArrayList<Stock> Stocks,String field) throws Exception
 	{
 		double[] value_array=new double [count];
 		this.count=Stocks.size();
@@ -36,7 +37,10 @@ public class FilterNumber {
 			throw new IOException("Errore, non ci sono dati corrispondenti ai filtri");
 			
 		}
-		else {for(int i=0;i<count;i++)	
+		else
+		{
+			
+			for(int i=0;i<count;i++)	
 			{
 			    Method m=null;
 			    try {
@@ -47,18 +51,18 @@ public class FilterNumber {
 	                e.printStackTrace();
 	                throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Il formato non è corretto"); 
 	            }
-			    	
-			    }
+
 			}
 		}
 
 	//set
-	    setAvg(value_array);
+/*
+ 	    setAvg(value_array);
 		setSum(value_array);
 		setMin(value_array);
 		setMax(value_array);
 		setDev_std(value_array);
-		
+	*/	
 	}
 
 
@@ -71,7 +75,7 @@ public class FilterNumber {
 		this.avg = avg;
 	}
   
-	public void setAvg(double[] value_array) {
+	public void setAvg() {
 		setAvg(sum/count);
 	}
 	
