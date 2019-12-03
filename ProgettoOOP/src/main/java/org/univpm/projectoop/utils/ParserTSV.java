@@ -14,6 +14,14 @@ public abstract class ParserTSV {
 	private static List<Stock> data = new ArrayList<Stock>();
 	private static List<String> header = new ArrayList<String>();
 	
+	public static List<String> getHeader() {
+		return header;
+	}
+
+	public static void setHeader(List<String> header) {
+		ParserTSV.header = header;
+	}
+
 	public static void addStock(Stock s) {
 		data.add(s);
 	}

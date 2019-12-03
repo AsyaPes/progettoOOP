@@ -2,6 +2,9 @@ package org.univpm.projectoop.dataset;
 
 import java.util.List;
 
+import org.springframework.beans.factory.config.TypedStringValue;
+import org.univpm.projectoop.utils.ParserTSV;
+
 public class Stock {
 
 	public String unit;
@@ -61,6 +64,33 @@ public class Stock {
 
 	public void setTime(List<Integer> time) {
 		this.time = time;
+	}
+	
+	public Object getValueByName(String value)  
+	{
+		switch(value)
+		{
+			case "Unit":
+				return this.getUnit();
+			
+			case "Product":
+				return this.getProduct();
+			
+			case "Indic_nrg":
+				return this.getIndic_nrg();
+			
+			case "Geo":
+				return this.getGeo();
+			
+		}
+		
+		if(ParserTSV.getHeader().contains(value))
+		{
+			int index = ParserTSV.getHeader().indexOf(value);
+			return this.getTime().get(index+4);
+		}
+		
+		return null;
 	}
 	
 }

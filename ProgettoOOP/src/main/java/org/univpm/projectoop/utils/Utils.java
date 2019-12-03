@@ -7,6 +7,7 @@ import org.json.simple.parser.ParseException;
 import org.univpm.projectoop.exceptions.JSONInvalidFilter;
 import org.univpm.projectoop.exceptions.JSONParsingError;
 
+import java.awt.List;
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
@@ -15,6 +16,7 @@ import java.net.URLConnection;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.ArrayList;
 
 
 public class Utils {
@@ -106,10 +108,27 @@ public class Utils {
 
 		return null;
 	}
+	
 
+	//lista campi validi
+	public static ArrayList<String> getValidFields()
+	{	
+		ArrayList<String> validFields = new ArrayList<String>();
+		validFields.add("Unit");
+		validFields.add("Product");
+		validFields.add("Indic_nrg");
+		validFields.add("Geo");
+		validFields.add("Time");
+		for(int n1 = 5; n1 < ParserTSV.getHeader().size() ; n1++)
+		{
+			validFields.add( String.valueOf(ParserTSV.getHeader().get(n1)) );	
+		}
+		return validFields;
+	}
+	
 	public static void checkFilterJSON(JSONObject filterJSON) throws JSONInvalidFilter
 	{
-		// TODO Auto-generated method stub
+		
 		
 	}
 	
