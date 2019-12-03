@@ -4,6 +4,8 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import org.univpm.projectoop.exceptions.JSONInvalidFilter;
+import org.univpm.projectoop.exceptions.JSONParsingError;
 
 import java.io.*;
 import java.net.HttpURLConnection;
@@ -85,5 +87,33 @@ public class Utils {
             System.out.println("Il file TSV è già stato scaricato!");
         }
     }
+
+	public static JSONObject parseJSONString(String stringa) throws JSONParsingError
+	{
+		JSONParser p = new JSONParser();
+		JSONObject parsedJSON = new JSONObject();
+		
+		if(stringa != null)
+		{
+			try {
+				parsedJSON = (JSONObject) p.parse(stringa);
+			} catch (ParseException e) {
+				throw new JSONParsingError();
+			}
+
+			return parsedJSON;
+		}
+
+		return null;
+	}
+
+	public static void checkFilterJSON(JSONObject filterJSON) throws JSONInvalidFilter
+	{
+		// TODO Auto-generated method stub
+		
+	}
+	
+	
+	
 }
 
