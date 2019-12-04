@@ -141,12 +141,11 @@ public class Utils {
 			if(k instanceof String && validFields.contains(((String)k)))
 			{
 				// Chiave valida, controllo il valore
-				try {
 					
 					Object filterValueObj = filterJSON.get(k);
 					
 					if(!(filterValueObj instanceof JSONObject))
-						throw new ParseException(0);
+						throw new JSONInvalidValue();
 					
 					JSONObject filterValue = (JSONObject)( filterValueObj );
 
@@ -170,31 +169,50 @@ public class Utils {
 						
 										
 					}
-					
 			
-				
-			    }catch(ParseException e) 
-				{
-			    	throw new JSONInvalidValue(); 
-			    }catch(Exception e) 
-				{
-			    	throw new JSONInvalidKey(); 
-			    }
 				
 				
 				// $or e $and
-			}else if(true){
-				//
-			}else{
-				throw new JSONInvalidKey();
+			}else if(k instanceof String && (((String)k).equals("$or") || ((String)k).equals("$and")) )
+			{
+						
+						if(! (filterJSON.get(k) instanceof JSONArray ) )	
+							{
+								throw new JSONInvalidValue();
+							}
+						
+						JSONArray ArrayfilterJSON = (JSONArray) filterJSON.get(k);
+						
+						
+						Object[] elementsInside = ArrayfilterJSON.toArray();
+						
+						for( int j = 0; j < elementsInside.length; j++ )
+						{
+							Object elementInside = elementsInside[j];
+							JSONObject inElement = (JSONObject)elementInside;
+							
+							// keysInside contiene il nome degli attributi
+							Object[] keysInside = inElement.keySet().toArray();
+							
+							for(int l=0;l<keysInside.length;l++)
+							{
+								Object attributeObj = keysInside[l];
+								Object valueObj = inElement.get(attributeObj);
+																
+								Utils.checkLogicalFilter(attributeObj, valueObj);
+	
+							}
+							
+						}
+						
 			}
-				
-				
+			
+			throw new JSONInvalidKey();
+						
 		}
-		
-		
-	}
 
+	}
+	
 	private static void checkSingleFilterString(Object key, Object value) throws JSONInvalidKey, JSONInvalidValue {
 		if(key instanceof String ) 
 		{
@@ -202,12 +220,16 @@ public class Utils {
 			{
 				case "$in":
 				case "$nin":
-					for (int i=0; i<((JSONArray)value).size();i++) 
-					{
-						if(value instanceof JSONArray && ((JSONArray)value).get(i) instanceof String ) 
+					if( value instanceof JSONArray )
+					{						
+						for (int i=0; i<((JSONArray)value).size();i++) 
 						{
-							return;
+							if(!(((JSONArray)value).get(i) instanceof String ) ) 
+							{
+								break;
+							}
 						}
+						return;
 					}
 					break;
 				case "$not":
@@ -243,12 +265,10 @@ public class Utils {
 					
 				case "$bt":
 					if(value instanceof JSONArray
-						&& ((JSONArray)value).size() == 2
-						&& ((JSONArray)value).get(0) instanceof Number 
-						&& ((JSONArray)value).get(1) instanceof Number ) 
-					{
-						return;
-					}
+							&& ((JSONArray)value).size() == 2
+							&& ((JSONArray)value).get(0) instanceof Number 
+							&& ((JSONArray)value).get(1) instanceof Number ) 
+						{return;}
 					break;
 				case "$not":
 					if(value instanceof Number)
@@ -265,4 +285,26 @@ public class Utils {
 		throw new JSONInvalidKey();
 		
 	}
+	
+	private static void checkLogicalFilter(Object key, Object value) throws JSONInvalidKey, JSONInvalidValue {
+		if(key instanceof String ) 
+		{
+			if(((String)key).equals("Unit")
+					|| ((String)key).equals("Indic_nrg")
+					|| ((String)key).equals("Geo"))
+			{
+				// Stringa
+				if( value instanceof String ) return;
+			}else
+			{
+				// Numero
+				if( value instanceof Number ) return;
+			}
+			
+			throw new JSONInvalidValue();
+		
+		}
+		throw new JSONInvalidKey();
+	}
 }
+	
