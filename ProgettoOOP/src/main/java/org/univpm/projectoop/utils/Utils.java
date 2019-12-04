@@ -4,6 +4,8 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import org.univpm.projectoop.exceptions.JSONInvalidKey;
+import org.univpm.projectoop.exceptions.JSONInvalidValue;
 import org.univpm.projectoop.exceptions.JSONInvalidFilter;
 import org.univpm.projectoop.exceptions.JSONParsingError;
 
@@ -16,6 +18,7 @@ import java.net.URLConnection;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.security.KeyException;
 import java.util.ArrayList;
 
 
@@ -118,21 +121,148 @@ public class Utils {
 		validFields.add("Product");
 		validFields.add("Indic_nrg");
 		validFields.add("Geo");
-		validFields.add("Time");
-		for(int n1 = 5; n1 < ParserTSV.getHeader().size() ; n1++)
+		for(int n1 = 4; n1 < ParserTSV.getHeader().size() ; n1++)
 		{
 			validFields.add( String.valueOf(ParserTSV.getHeader().get(n1)) );	
 		}
 		return validFields;
 	}
 	
-	public static void checkFilterJSON(JSONObject filterJSON) throws JSONInvalidFilter
+	public static void checkFilterJSON(JSONObject filterJSON) throws JSONInvalidKey, JSONInvalidValue
 	{
+		ArrayList<String> validFields = Utils.getValidFields();
+		JSONObject dataFilteredJSON = new JSONObject();
+		Object[] keys = filterJSON.keySet().toArray();
+	
+		for(int i=0; i< keys.length;i++)
+		{
+			Object k = keys[i];
+			
+			if(k instanceof String && validFields.contains(((String)k)))
+			{
+				// Chiave valida, controllo il valore
+				try {
+					
+					Object filterValueObj = filterJSON.get(k);
+					
+					if(!(filterValueObj instanceof JSONObject))
+						throw new ParseException(0);
+					
+					JSONObject filterValue = (JSONObject)( filterValueObj );
+
+					Object[] keys2 = filterValue.keySet().toArray();
+					
+					for( int j = 0; j < keys2.length; j++ )
+					{
+						Object key2 = keys2[j];
+						Object value2 = filterValue.get(key2);
+						
+						if(((String)k).equals("Unit")
+								|| ((String)k).equals("Indic_nrg")
+								|| ((String)k).equals("Geo"))
+						{
+							Utils.checkSingleFilterString(key2, value2);
+						}else
+						{
+							Utils.checkSingleFilterNumber(key2, value2);
+						}
+						
+						
+										
+					}
+					
+			
+				
+			    }catch(ParseException e) 
+				{
+			    	throw new JSONInvalidValue(); 
+			    }catch(Exception e) 
+				{
+			    	throw new JSONInvalidKey(); 
+			    }
+				
+				
+				// $or e $and
+			}else if(true){
+				//
+			}else{
+				throw new JSONInvalidKey();
+			}
+				
+				
+		}
 		
 		
 	}
-	
-	
-	
-}
 
+	private static void checkSingleFilterString(Object key, Object value) throws JSONInvalidKey, JSONInvalidValue {
+		if(key instanceof String ) 
+		{
+			switch((String)key) 
+			{
+				case "$in":
+				case "$nin":
+					for (int i=0; i<((JSONArray)value).size();i++) 
+					{
+						if(value instanceof JSONArray && ((JSONArray)value).get(i) instanceof String ) 
+						{
+							return;
+						}
+					}
+					break;
+				case "$not":
+					if(value instanceof String)
+					{
+						return;
+					}
+			}
+			
+			throw new JSONInvalidValue();
+			
+		}
+
+		throw new JSONInvalidKey();
+		
+	}
+	
+
+	private static void checkSingleFilterNumber(Object key, Object value) throws JSONInvalidKey, JSONInvalidValue {
+		if(key instanceof String ) 
+		{
+			switch((String)key) 
+			{
+				case "$gt":
+				case "$gte":
+				case "$lt":
+				case "$lte":
+					if(value instanceof Number) 
+					{
+						return;
+					}
+					break;
+					
+				case "$bt":
+					if(value instanceof JSONArray
+						&& ((JSONArray)value).size() == 2
+						&& ((JSONArray)value).get(0) instanceof Number 
+						&& ((JSONArray)value).get(1) instanceof Number ) 
+					{
+						return;
+					}
+					break;
+				case "$not":
+					if(value instanceof Number)
+					{
+						return;
+					}
+					break;
+			}
+			
+			throw new JSONInvalidValue();
+			
+		}
+
+		throw new JSONInvalidKey();
+		
+	}
+}

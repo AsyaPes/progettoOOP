@@ -92,5 +92,4 @@ public class Stock {
 		
 		return null;
 	}
-	
 }
