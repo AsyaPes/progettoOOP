@@ -113,6 +113,30 @@ public class Utils {
 	}
 	
 
+	//lista campi numerici
+	public static ArrayList<String> getNumericFields()
+	{	
+		ArrayList<String> validFields = new ArrayList<String>();
+		validFields.add("Product");
+		for(int n1 = 4; n1 < ParserTSV.getHeader().size() ; n1++)
+		{
+			validFields.add( String.valueOf(ParserTSV.getHeader().get(n1)) );	
+		}
+		return validFields;
+	}
+	
+
+	//lista campi stringhe
+	public static ArrayList<String> getStringFields()
+	{	
+		ArrayList<String> validFields = new ArrayList<String>();
+		validFields.add("Unit");
+		validFields.add("Indic_nrg");
+		validFields.add("Geo");
+		return validFields;
+	}
+	
+
 	//lista campi validi
 	public static ArrayList<String> getValidFields()
 	{	
@@ -286,12 +310,11 @@ public class Utils {
 		
 	}
 	
-	private static void checkLogicalFilter(Object key, Object value) throws JSONInvalidKey, JSONInvalidValue {
+	private static void checkLogicalFilter(Object key, Object value) throws JSONInvalidKey, JSONInvalidValue
+	{
 		if(key instanceof String ) 
 		{
-			if(((String)key).equals("Unit")
-					|| ((String)key).equals("Indic_nrg")
-					|| ((String)key).equals("Geo"))
+			if( getStringFields().contains((String)key) )
 			{
 				// Stringa
 				if( value instanceof String ) return;
