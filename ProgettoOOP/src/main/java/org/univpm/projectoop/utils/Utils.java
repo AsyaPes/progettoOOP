@@ -177,9 +177,9 @@ public class Utils {
 			{
 						
 						if(! (filterJSON.get(k) instanceof JSONArray ) )	
-							{
-								throw new JSONInvalidValue();
-							}
+						{
+							throw new JSONInvalidValue();
+						}
 						
 						JSONArray ArrayfilterJSON = (JSONArray) filterJSON.get(k);
 						
