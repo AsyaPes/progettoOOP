@@ -3,6 +3,8 @@ package org.univpm.projectoop.dataset;
 import java.security.InvalidKeyException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Arrays;
+
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -102,11 +104,13 @@ public class Stock {
 	
 	public boolean Filter(JSONObject JSONFilters)
 	{
+		
 		//Scorre le chiavi di tutti i filtri JSON
 		for(Object ObjKeyField : JSONFilters.keySet())
 		{
-			String field=(String) ObjKeyField;
-			List<String> validFields= Utils.getValidFields();
+			boolean ok = false;
+			
+			String field = (String) ObjKeyField;
 			
 			if( (field.equals("$and")) || (field.equals("$or")) )
 			{
@@ -115,31 +119,51 @@ public class Stock {
 				switch(field)
 				{
 					case "$and":
+					{
+						ok = true;
+						JSONArray filters = (JSONArray)JSONFilters.get(field);
 						
-						boolean ok = true;
-						// for() // PER OGNI ELEMENTO DEL JSONArray //Controllare che Status sia uguale a G
+						for(Object insideFieldObj : filters) // PER OGNI ELEMENTO DEL JSONArray
 						{
+							JSONObject insideField = (JSONObject)insideFieldObj;
 							
+							for(Object insideKey : insideField.keySet())
+							{
+								String insideFieldKey = (String) insideKey;
+								String valore = (String)insideField.get(insideFieldKey);
+								
+								ok = equalNameControl(insideFieldKey, valore);
+								
+								if( !ok ) return false;
+								
+							}
 							
-							try {
-								ok = equalNameControl(nomeVariabile, valore);
-							}catch(InvalidKeyException e){}
-							
-							if( !ok ) return false;
 						}
 	
 						break;
+					}
 						
 					case "$or":
+					{
+						ok = false;
+						JSONArray filters = (JSONArray)JSONFilters.get(field);
 						
-						boolean ok = false;
-						// for() // PER OGNI ELEMENTO DEL JSONArray
+						for(Object insideFieldObj : filters) // PER OGNI ELEMENTO DEL JSONArray
 						{
-
-							try {
-								ok = equalNameControl(nomeVariabile, valore);
-							}catch(InvalidKeyException e){}
+							JSONObject insideField = (JSONObject)insideFieldObj;
 							
+							for(Object insideKey : insideField.keySet())
+							{
+								String insideFieldKey = (String) insideKey;
+								String valore = (String)insideField.get(insideFieldKey);
+								
+								ok = equalNameControl(insideFieldKey, valore);
+								
+								if( ok ) break;
+								
+							}
+							
+
 							if( ok ) break;
 	
 						}
@@ -147,73 +171,143 @@ public class Stock {
 						if( !ok ) return false;
 	
 						break;
+					}
 				
 				}
 				
 				// CICLO PER OGNI CHIAVE -> CONTROLLIAMO I VALUE DEL FILTRO CON I VALORI DELL'OGGETTO CORRENTE
 				
-			}else {
+			}else{
 				
 				JSONObject innerObject = (JSONObject)JSONFilters.get(field);
 				
 				// BLOCCO CAMPI
-				if( field.equals("Unit") ||
-					field.equals("Indic_nrg") ||
-					field.equals("Geo"))
+				if( Utils.getStringFields().contains(field) )
 				{
 					
 					// FOR SULLE KEY di innerObject
-					//for()
-					{
+					String newfilter;
+					
+					for(Object filter : innerObject.keySet() )
+      				{ 
+						newfilter = (String)filter;
+					
 						// FILTRI SULLE STRINGHE ALL'INTERNO DEL FOR
-						//switch()
+						switch(newfilter)
 						{
-							case "$not": 
-								//
-								break;
+							case "$not":
+							{
+								String stringFilter;
+								
+								ok = true;
+								stringFilter = (String)innerObject.get(newfilter);
+								ok = !(this.equalNameControl((String)field, stringFilter));
+							
+							   if( !ok ) return false;
+							}
+		
+							break;
+							
 								
 							case "$in": 
-								//
+							{
+								String[] stringFilterArr;
+								stringFilterArr = (String[])( (JSONArray)innerObject.get(newfilter) ).toArray();
+								try {
+									ok = this.ContainsNameControl((String)field, stringFilterArr);
+								} catch (JSONInvalidValue e) {}
+								
+								
+								if( !ok ) return false;
 								break;
+							}
+		
 								
 							case "$nin": 
-								//
+							{
+								String[] stringFilterArr;
+								try {
+										stringFilterArr = (String[])( (JSONArray)innerObject.get(newfilter) ).toArray();
+										ok = !(this.ContainsNameControl((String)field, stringFilterArr));
+										
+								    }catch(JSONInvalidValue e){}
+								
+								if( !ok ) return false;
 								break;
+							}
 								
 							
 						}
-						
 					}
-					
 				}else {
 					
-					// FOR SULLE KEY di innerObject
-					//for()
+					for(Object filter : innerObject.keySet())
 					{
 						// FILTRI SUI NUMERI ALL'INTERNO DEL FOR
-						//switch()
+						String newfilter = (String)filter;
+						Integer numberFilter;
+						
+						switch(newfilter)
 						{
 							case "$lt": 
-								//
+							{
+								numberFilter = (Integer)innerObject.get(newfilter);
+								ok = this.LowerNumberControl(field, numberFilter);
+								
+								if( !ok ) return false;
 								break;
+							}
 								
 							case "$lte": 
-								//
-								break;
+							{
+								numberFilter = (Integer)innerObject.get(newfilter);
+								ok = this.LowerNumberControl(field, numberFilter);
+								if( !ok ) return false;
+								ok = ok || this.equalNameControl(field, numberFilter);
+								if(!ok) return false;
 								
-							case "$gt": 
-								//
 								break;
+							}
 								
-							case "$gte": 
-								//
+							case "$gt":
+								
+							{
+								numberFilter = (Integer)innerObject.get(newfilter);
+								ok = this.GreaterNumberControl(field, numberFilter);
+								
+								if( !ok ) return false;
 								break;
+							}
+								
+							case "$gte":
+							{
+								numberFilter = (Integer)innerObject.get(newfilter);
+								ok = this.GreaterNumberControl(field, numberFilter);
+								if( !ok ) return false;
+								ok = ok || this.equalNameControl(field, numberFilter);
+								if(!ok) return false;
+							
+								break;
+							}
 								
 							case "$bt": 
-								//
+							{ 
+								JSONArray numbervalues;
+								Object[] arrayObj;
+								Integer[] filterNumberRange;
+								
+								numbervalues = (JSONArray)innerObject.get(newfilter);
+								arrayObj = numbervalues.toArray();
+								filterNumberRange = Arrays.copyOf(arrayObj, arrayObj.length, Integer[].class);
+								
+								ok = BetweenNumberControl(field,filterNumberRange[0],filterNumberRange[1]);
+								
+								if( !ok ) return false;
+
 								break;
 								
-							
+				             }
+					
 						}
 						
 					}
@@ -225,36 +319,107 @@ public class Stock {
 		}
 		
 		return true;
-	}
-	
-	
-	
-
-	private boolean equalNameControl(String variable, Object valueToCheck) throws JSONInvalidValue {
+}
 		
-		List<String> validFields = new ArrayList<String>();
-		validFields = Utils.getValidFields();
-		if(!(validFields.contains(variable)))
+	private boolean BetweenNumberControl(String field, Object number_1, Object number_2)
+	{
+	
+		Integer min, max;
+
+		min = Math.min((Integer)number_1, (Integer)number_2);
+		max = Math.max((Integer)number_1, (Integer)number_2);
+		
+		return this.GreaterNumberControl(field, min)
+			&& this.LowerNumberControl(field, max)
+			|| this.equalNameControl(field, min)
+			|| this.equalNameControl(field, max);
+	}
+
+	private boolean GreaterNumberControl(String variable, Object valueToCheck)
+	{
+		List<String> header = Utils.getNumericFields();
+		
+		List<Integer> timeList = this.getTime();
+		
+		for(String timeName : header)
+		{
+			if(timeName.equals(variable))
+			{
+				Integer tmp = header.indexOf(variable);
+				return (timeList.get(tmp)>(Integer)valueToCheck);
+			}
+		}
+		return false;
+	}
+
+	private boolean LowerNumberControl(String variable, Object valueToCheck)
+	{
+
+		List<String> header = Utils.getNumericFields();
+		
+		List<Integer> timeList = this.getTime();
+		
+		for(String timeName : header)
+		{
+			if(timeName.equals(variable))
+			{
+				Integer tmp = header.indexOf(variable);
+				return (timeList.get(tmp)<(Integer)valueToCheck);
+			}
+		}
+		return false;
+	}
+
+	private boolean ContainsNameControl(String variable, Object valueToCheck) throws JSONInvalidValue {
+	
+		List<String> validFields = Utils.getStringFields();
+		
+		if(!(validFields.contains(valueToCheck)))
 		{
 			throw new JSONInvalidValue();
 		}
 		
+		List<String> str = Arrays.asList((String[])valueToCheck);
 		switch(variable)
 		{
 		
-		case "Unit": return (valueToCheck instanceof String && ((String)valueToCheck).equals(this.getUnit()));
+			case "Unit": return (valueToCheck instanceof String[] && (str.contains(this.getUnit())));
+			
+			case "Indic_nrg": return(valueToCheck instanceof String[] && (str.contains(this.getUnit())));
+			
+			case "Geo": return(valueToCheck instanceof String[] && (str.contains(this.getUnit())));
 		
-		case "Product": return (valueToCheck instanceof String && ((String)valueToCheck).equals(this.getProduct()));
+		}
+		return false;
+	}
+
 	
-		case "Indic_nrg": return(valueToCheck instanceof String && ((String)valueToCheck).equals(this.getUnit()));
+	
+	
+	
+
+	private boolean equalNameControl(String variable, Object valueToCheck)  {
 		
-		case "Geo": return(valueToCheck instanceof String && ((String)valueToCheck).equals(this.getUnit()));
+		List<String> validFields = Utils.getValidFields();
+		if(!(validFields.contains(variable)))
+		{
+			return false;
+		}
+		
+		switch(variable)
+		{
+			
+			case "Unit": return (valueToCheck instanceof String && ((String)valueToCheck).equals(this.getUnit()));
+			
+			case "Indic_nrg": return(valueToCheck instanceof String && ((String)valueToCheck).equals(this.getUnit()));
+			
+			case "Geo": return(valueToCheck instanceof String && ((String)valueToCheck).equals(this.getUnit()));
 		
 		}
 		
 		if(!(valueToCheck instanceof Integer))
 		{
-			throw new JSONInvalidValue();
+			return false;
 		}
 		
 		List<String> header = ParserTSV.getHeader();
