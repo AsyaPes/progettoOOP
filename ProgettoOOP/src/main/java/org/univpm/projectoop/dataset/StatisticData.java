@@ -14,15 +14,22 @@ import org.univpm.projectoop.utils.Utils;
 
 public class StatisticData {
 	
-	List<Stock> stocks = new ArrayList<Stock>(); 
-	public static JSONObject statsMethod(List<Stock> stocks) throws JSONInvalidValue
+	List<Stock> stocks = new ArrayList<Stock>();
+	
+	@SuppressWarnings("unchecked")
+	public static JSONObject statsMethod(List<Stock> stocks)
 	{
 		if( stocks.size() == 0 )
 		{
-			throw new JSONInvalidValue();
+			JSONObject jsonVoid = new JSONObject();
+			
+			jsonVoid.put("Dati", new String[0] );
+			
+			return jsonVoid;
 		}
 		
 		FilterNumber[] data = new FilterNumber[Utils.getNumericFields().size() - 1]; //Con il -1 escludo Product
+		FilterNumber Product = new FilterNumber();
 		Map<String,Integer> Unit = new HashMap<String,Integer>();
 		Map<String,Integer> Indic_nrg = new HashMap<String,Integer>();
 		Map<String,Integer> Geo = new HashMap<String,Integer>();
@@ -33,16 +40,41 @@ public class StatisticData {
 		}
 		
 		JSONObject stats = new JSONObject();
-		JSONArray statsData= new JSONArray();
+		JSONArray statsData = new JSONArray();
 		
 		for (Stock s : stocks) 
 		{
-			analyzeUniqueStrings("Unit", Unit);
-			analyzeUniqueStrings("Indic_nrg", Indic_nrg);
-			analyzeUniqueStrings("Geo", Geo);
+			analyzeUniqueStrings(s.getUnit(), Unit);
+			analyzeUniqueStrings(s.getIndic_nrg(), Indic_nrg);
+			analyzeUniqueStrings(s.getGeo(), Geo);
+			Product.insertValue(s.getProduct());
 			
-			
+			List<Integer> times = s.getTime();
+			for(int i = 0; i < times.size(); i++)
+			{
+				Integer time = times.get(i);
+				data[i].insertValue(time);
+			}
 		}
+				
+		JSONObject analyticsUnit = Utils.getJSONAnalyticsString( Unit, "Unit" );
+		JSONObject analyticsGeo = Utils.getJSONAnalyticsString( Geo, "Geo" );
+		JSONObject analyticsIndic_nrg = Utils.getJSONAnalyticsString( Indic_nrg, "Indic_nrg" );
+			
+		List<String> header = ParserTSV.getHeader();
+				
+		statsData.add(analyticsUnit);
+		statsData.add(Product.getJSONAnalyticsNumeric("Product"));
+		statsData.add(analyticsIndic_nrg);
+		statsData.add(analyticsGeo);
+
+		for(int i=0;i<data.length;i++) 
+		{
+			statsData.add( data[i].getJSONAnalyticsNumeric( header.get(4+i) ) );	
+		}			
+		
+		
+		stats.put("Dati", statsData);
 		
 		return stats;
 	}

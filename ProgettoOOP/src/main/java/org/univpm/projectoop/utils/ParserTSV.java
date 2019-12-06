@@ -12,6 +12,11 @@ import org.univpm.projectoop.dataset.Stock;
 public abstract class ParserTSV {
 	
 	private static List<Stock> data = new ArrayList<Stock>();
+	
+	public static List<Stock> getData() {
+		return data;
+	}
+
 	private static List<String> header = new ArrayList<String>();
 	
 	public static List<String> getHeader() {
@@ -26,7 +31,7 @@ public abstract class ParserTSV {
 		data.add(s);
 	}
 
-	public void ParserDataSet () throws IOException{
+	public static void parserDataSet () throws IOException{
 		
 	BufferedReader TSVFile = new BufferedReader(new FileReader("data.tsv"));
 	String dataRow = TSVFile.readLine(); // Legge la prima linea
@@ -37,17 +42,23 @@ public abstract class ParserTSV {
 		header.add(h);
 	}
 	
-	while (dataRow != null){
+	dataRow = TSVFile.readLine(); // Legge la seconda linea
+	
+	while (dataRow != null)
+	{
 		dataArray = dataRow.split("[,\\t]");
+		
 		if(dataArray.length != header.size()) {
-			throw new IOException("La riga non contiene il giusto numero di dati.");
+			System.out.println("La riga non contiene il giusto numero di dati: " + dataRow.trim());
+			dataRow = TSVFile.readLine(); // Legge la seconda linea
+			continue;
 		}
 		
 		for(int i=0;i< dataArray.length;i++)
 		{
 			//se il campo è : allora sostituisco quel valore (di posizione i) "0"
 			String tmp = dataArray[i].trim();
-			if(tmp == ":")
+			if(tmp.equals(":"))
 				dataArray[i] = "0";
 			else
 				dataArray[i] = tmp;
@@ -61,7 +72,7 @@ public abstract class ParserTSV {
 		s.setIndic_nrg(dataArray[2]);
 		s.setGeo(dataArray[3]);
 		
-		for (int i=0 ; i<header.size();i++)
+		for (int i=0 ; i<header.size()-4;i++)
 		{
 			DataTime.add(Integer.parseInt(dataArray[4+i]));
 		}

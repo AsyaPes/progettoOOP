@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.univpm.projectoop.dataset.StatisticData;
 import org.univpm.projectoop.dataset.Stock;
 import org.univpm.projectoop.dataset.StockCollection;
 import org.univpm.projectoop.exceptions.JSONInvalidFilter;
@@ -26,16 +27,21 @@ public class MainController {
 	public JSONObject index()
 	{
 		JSONObject json = new JSONObject();
-		
+		json.put("ABC", ParserTSV.getData());
 		return json;
+	}
+	
+	@RequestMapping(value = "/getFilteredData", produces="application/json")
+	public JSONObject getFilteredDataGET()
+	{
+		return StatisticData.statsMethod( ParserTSV.getData() );
 	}
 	
 	//gli passo un filtro con richiesta post
 	@RequestMapping( value = "/getFilteredData", method = RequestMethod.POST, produces="application/json" )
-	public JSONObject getFilteredData( @RequestBody(required = false) String filter )
+	public JSONObject getFilteredDataPOST( @RequestBody(required = false) String filter )
 	{
 		
-		List<Stock> data = new ArrayList<Stock>();
 		JSONParser p = new JSONParser();
 		JSONObject filteredData;
 		JSONObject filterJSON;
@@ -43,10 +49,22 @@ public class MainController {
 		if(filter != null) {
 			
 			try {
+		
+				List<Stock> data = new ArrayList<Stock>();
+				
 				filterJSON = Utils.parseJSONString(filter); // (JSONObject) p.parse(filter);
 				
 				Utils.checkFilterJSON(filterJSON);
 				
+				for( Stock stock : ParserTSV.getData() )
+				{
+					if( stock.Filter( filterJSON ) )
+					{
+						data.add( stock );						
+					}
+				}
+				
+				return StatisticData.statsMethod( data );
 				
 			}catch(JSONParsingError e) {
 				return e.getJSONError();
@@ -54,17 +72,11 @@ public class MainController {
 			}catch(JSONInvalidFilter e) {
 				return e.getJSONError();
 			}
+		}else {
+			
+			return StatisticData.statsMethod( ParserTSV.getData() );
 		}
 		
-		
-		
-		
-		//parsing filtro in oggetto json
-		//verficare se filtro corretto(se non corretto errore)
-		//ciclare per ogni persona del dataset appicare filtro e aggiungere all'arrayLIst se è valido per il filtro
-		
-		
-		return null;
 	}
 		
 }

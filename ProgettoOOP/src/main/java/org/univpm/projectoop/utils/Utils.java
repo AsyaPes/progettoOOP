@@ -20,6 +20,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.security.KeyException;
 import java.util.ArrayList;
+import java.util.Map;
 
 
 public class Utils {
@@ -328,6 +329,28 @@ public class Utils {
 		
 		}
 		throw new JSONInvalidKey();
+	}
+	
+	// restituisce un oggetto JSONArray contenente i dati analitici dell'hashmap passatagli come argomento
+	public static JSONObject getJSONAnalyticsString( Map<String, Integer> ht, String field )
+	{
+		JSONObject finalJSON = new JSONObject();
+		JSONArray json = new JSONArray();
+		
+		for (String uniqueString : ht.keySet() )
+		{
+			int uniqueStringCount = ht.get(uniqueString);
+			JSONObject jobj = new JSONObject ();
+			jobj.put("Valore", uniqueString);
+			jobj.put("Contatore", uniqueStringCount);
+			json.add(jobj);
+		}
+		
+		finalJSON.put("Tipo", "String");
+		finalJSON.put("Attributo", field);
+		finalJSON.put("Dati", json);
+		
+		return finalJSON;
 	}
 }
 	

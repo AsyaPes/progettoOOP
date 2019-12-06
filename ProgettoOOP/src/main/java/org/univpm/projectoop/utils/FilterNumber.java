@@ -2,6 +2,10 @@ package org.univpm.projectoop.utils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 
 
 public class FilterNumber {
@@ -115,6 +119,26 @@ public class FilterNumber {
 		return count;
 	}
 
-
+	public JSONObject getJSONAnalyticsNumeric( String field )
+	{
+		JSONObject numData = new JSONObject();
+		JSONArray json = new JSONArray();
+		
+		JSONObject numDataObject = new JSONObject();
+		
+		numDataObject.put("Attributo", field );
+		
+		numData.put("Somma", this.getSum() );
+		numData.put("Massimo", this.getMax() );
+		numData.put("Minimo", this.getMin() );
+		numData.put("DeviazioneStandard", this.getDev_std() );
+		numData.put("Conteggio", this.getCount() );
+		numData.put("Media", this.getAvg() );
+		
+		numDataObject.put("Dati", numData);
+		numDataObject.put("Tipo", "Integer");
+		
+		return numDataObject;
+	}
 
 }
