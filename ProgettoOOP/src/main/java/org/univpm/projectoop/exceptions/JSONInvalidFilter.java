@@ -4,11 +4,18 @@ import org.json.simple.JSONObject;
 
 public class JSONInvalidFilter extends Exception {
 	
+	/**
+	 * 
+	 */
 	@Override
 	public String getMessage() {
 		return "Errore,filtro non valido";
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public JSONObject getJSONError() {
 		JSONObject error = new JSONObject();
 

@@ -22,23 +22,42 @@ import java.security.KeyException;
 import java.util.ArrayList;
 import java.util.Map;
 
-
+/**
+ * 
+ * @author Asya Pesaresi e Lorenzo Vagnini
+ *
+ */
 public class Utils {
 	
 	public static URLConnection openConnection;
 	public static InputStream in;
-
+	
+	/**
+	 * 
+	 * @throws IOException
+	 */
     public static void openConnection() throws IOException
     {
 		openConnection = new URL("https://ec.europa.eu/eurostat/estat-navtree-portlet-prod/BulkDownloadListing?file=data/nrg_ind_342m.tsv.gz&unzip=true").openConnection();
 		in = openConnection.getInputStream();
     }
  
+    /**
+     * 
+     * @throws IOException
+     */
 	public static void closeConnection() throws IOException
 	{
 		in.close();
 	}
 
+	/**
+	 * 
+	 * @param url
+	 * @return
+	 * @throws IOException
+	 * @throws ParseException
+	 */
     public static JSONObject getJSONFromURL(String url) throws IOException, ParseException {
         StringBuilder sb = new StringBuilder();
         int currentChar;
@@ -57,6 +76,10 @@ public class Utils {
         }
     }
 
+    /**
+     * 
+     * @param json
+     */
     public static void downloadTSVfromJSON(JSONObject json){
         JSONObject result = (JSONObject) json.get("result");
         JSONArray data = (JSONArray) result.get("resources");
@@ -74,7 +97,11 @@ public class Utils {
         }
     }
 
-
+    /**
+     * 
+     * @param url
+     * @throws IOException
+     */
     private static void downloadTSVFromURL(String url) throws IOException{
         if(!Files.exists(Paths.get("data.tsv"))){
         	
@@ -94,6 +121,12 @@ public class Utils {
         }
     }
 
+    /**
+     * 
+     * @param stringa
+     * @return
+     * @throws JSONParsingError
+     */
 	public static JSONObject parseJSONString(String stringa) throws JSONParsingError
 	{
 		JSONParser p = new JSONParser();
@@ -113,7 +146,10 @@ public class Utils {
 		return null;
 	}
 	
-
+	/**
+	 * 
+	 * @return
+	 */
 	//lista campi numerici
 	public static ArrayList<String> getNumericFields()
 	{	
@@ -126,7 +162,10 @@ public class Utils {
 		return validFields;
 	}
 	
-
+	/**
+	 * 
+	 * @return
+	 */
 	//lista campi stringhe
 	public static ArrayList<String> getStringFields()
 	{	
@@ -137,7 +176,10 @@ public class Utils {
 		return validFields;
 	}
 	
-
+	/**
+	 * 
+	 * @return
+	 */
 	//lista campi validi
 	public static ArrayList<String> getValidFields()
 	{	
@@ -153,6 +195,12 @@ public class Utils {
 		return validFields;
 	}
 	
+	/**
+	 * 
+	 * @param filterJSON
+	 * @throws JSONInvalidKey
+	 * @throws JSONInvalidValue
+	 */
 	public static void checkFilterJSON(JSONObject filterJSON) throws JSONInvalidKey, JSONInvalidValue
 	{
 		ArrayList<String> validFields = Utils.getValidFields();
@@ -238,6 +286,13 @@ public class Utils {
 
 	}
 	
+	/**
+	 * 
+	 * @param key
+	 * @param value
+	 * @throws JSONInvalidKey
+	 * @throws JSONInvalidValue
+	 */
 	private static void checkSingleFilterString(Object key, Object value) throws JSONInvalidKey, JSONInvalidValue {
 		if(key instanceof String ) 
 		{
@@ -272,7 +327,13 @@ public class Utils {
 		
 	}
 	
-
+	/**
+	 * 
+	 * @param key
+	 * @param value
+	 * @throws JSONInvalidKey
+	 * @throws JSONInvalidValue
+	 */
 	private static void checkSingleFilterNumber(Object key, Object value) throws JSONInvalidKey, JSONInvalidValue {
 		if(key instanceof String ) 
 		{
@@ -311,6 +372,13 @@ public class Utils {
 		
 	}
 	
+	/**
+	 * 
+	 * @param key
+	 * @param value
+	 * @throws JSONInvalidKey
+	 * @throws JSONInvalidValue
+	 */
 	private static void checkLogicalFilter(Object key, Object value) throws JSONInvalidKey, JSONInvalidValue
 	{
 		if(key instanceof String ) 
@@ -331,6 +399,12 @@ public class Utils {
 		throw new JSONInvalidKey();
 	}
 	
+	/**
+	 * 
+	 * @param ht
+	 * @param field
+	 * @return
+	 */
 	// restituisce un oggetto JSONArray contenente i dati analitici dell'hashmap passatagli come argomento
 	public static JSONObject getJSONAnalyticsString( Map<String, Integer> ht, String field )
 	{

@@ -20,9 +20,18 @@ import org.univpm.projectoop.utils.Utils;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+/**
+ * 
+ * @author Asya Pesaresi e Lorenzo Vagnini
+ *
+ */
 @RestController
 public class MainController {
 
+	/**
+	 * 
+	 * @return
+	 */
 	@RequestMapping(value = "/", produces="application/json")
 	public JSONObject index()
 	{
@@ -31,12 +40,21 @@ public class MainController {
 		return json;
 	}
 	
+	/**
+	 * 
+	 * @return
+	 */
 	@RequestMapping(value = "/getFilteredData", produces="application/json")
 	public JSONObject getFilteredDataGET()
 	{
 		return StatisticData.statsMethod( ParserTSV.getData() );
 	}
 	
+	/**
+	 * 
+	 * @param filter
+	 * @return
+	 */
 	//gli passo un filtro con richiesta post
 	@RequestMapping( value = "/getFilteredData", method = RequestMethod.POST, produces="application/json" )
 	public JSONObject getFilteredDataPOST( @RequestBody(required = false) String filter )
@@ -80,4 +98,3 @@ public class MainController {
 	}
 		
 }
-

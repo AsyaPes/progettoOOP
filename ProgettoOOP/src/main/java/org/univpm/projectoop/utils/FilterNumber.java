@@ -7,7 +7,11 @@ import java.util.Map;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-
+/**
+ * 
+ * @author Asya Pesaresi e Lorenzo Vagnini
+ *
+ */
 public class FilterNumber {
 	
 	private double avg;
@@ -19,6 +23,9 @@ public class FilterNumber {
 
 	private List<Integer> stocksData;
 	
+	/**
+	 * Costruttore della classe FilterNumber
+	 */
 	public FilterNumber ()
 	{
 		this.avg=0;
@@ -28,7 +35,10 @@ public class FilterNumber {
 		this.stocksData= new ArrayList<Integer>();
 	}
 	
- 
+	/**
+	 * 
+	 * @param field
+	 */
 	public void insertValue(Integer field)
 	{
 		this.stocksData.add(field);
@@ -49,57 +59,91 @@ public class FilterNumber {
 		setAvg();
 	}
 
-
-
+	/**
+	 * Metodo che restituisce avg
+	 * @return avg Media
+	 */
 	public double getAvg() {
 		return avg;
 	}
 
-
+	/**
+	 * Metodo che imposta il valore di avg
+	 * @param avg Media
+	 */
 	private void setAvg(double avg) {
 		this.avg = avg;
 	}
-  
+	
+	/**
+	 * 
+	 */
 	public void setAvg() {
 		setAvg((double)sum/count);
 	}
 	
-
+	/**
+	 * Metodo che restituisce sum
+	 * @return sum Somma 
+	 */
 	public int getSum() {
 		return sum;
 	}
-
-   private void setSum(Integer value) //Somma un valore
-   {
-	   sum+=value;
-   }
+	
+	/**
+	 * 
+	 * @param value
+	 */
+	private void setSum(Integer value) //Somma un valore
+	{
+		sum+=value;
+	}
    
+	/**
+	 * Metodo che restituisce min
+	 * @return min Minimo
+	 */
 	public int getMin() {
 		return min;
 	}
 
-
+	/**
+	 * Metodo che imposta il valore di min
+	 * @param min
+	 */
 	private void setMin(int min) {
 		this.min = min;
 	}
 	
-
+	/**
+	 * Metodo che restituisce max
+	 * @return max Massimo
+	 */
 	public int getMax() {
 		return max;
 	}
 
-
+	/**
+	 * Metodo che imposta il valore di max
+	 * @param max
+	 */
 	private void setMax(int max) {
 		this.max = max;
 	}
 
-
+	/**
+	 * Metodo che restiuisce dev_std
+	 * @return dev_std Deviazione Standard
+	 */
 	public double getDev_std() {
 		calculateDev_Std();
 		return dev_std;
 	}
 
-
+	/**
+	 * Metodo che calcola la dev_std
+	 * Deviazione Standard
+	 */
 	private void calculateDev_Std() {
 		double sum = 0;
         for (int v : this.stocksData) {
@@ -109,16 +153,27 @@ public class FilterNumber {
         setDev_std((double) Math.sqrt(sum/count));     
 	}
 
-
+	/**
+	 * Metodo che imposta la dev_std
+	 * @param dev_std
+	 */
 	private void setDev_std(double dev_std) {
 		this.dev_std = dev_std;
 	}
 
-
+	/**
+	 * Metodo che restituisce conut
+	 * @return count
+	 */
 	public int getCount() {
 		return count;
 	}
 
+	/**
+	 * 
+	 * @param field
+	 * @return
+	 */
 	public JSONObject getJSONAnalyticsNumeric( String field )
 	{
 		JSONObject numData = new JSONObject();

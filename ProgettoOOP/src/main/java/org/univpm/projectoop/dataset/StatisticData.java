@@ -16,6 +16,11 @@ public class StatisticData {
 	
 	List<Stock> stocks = new ArrayList<Stock>();
 	
+	/**
+	 * 
+	 * @param stocks
+	 * @return
+	 */
 	@SuppressWarnings("unchecked")
 	public static JSONObject statsMethod(List<Stock> stocks)
 	{
@@ -79,6 +84,12 @@ public class StatisticData {
 		return stats;
 	}
 	
+	/**
+	 * 
+	 * @param value
+	 * @param h
+	 * @return
+	 */
 	private static Map<String,Integer> analyzeUniqueStrings(String value,Map<String,Integer> h)
 	{
 		if(h.containsKey(value))

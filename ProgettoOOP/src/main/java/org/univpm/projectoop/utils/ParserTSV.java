@@ -8,29 +8,51 @@ import java.util.List;
 
 import org.univpm.projectoop.dataset.Stock;
 
-
+/**
+ * 
+ * @author Asya Pesaresi e Lorenzo Vagnini
+ *
+ */
 public abstract class ParserTSV {
 	
 	private static List<Stock> data = new ArrayList<Stock>();
 	
+	/**
+	 * Metodo che restituisce data
+	 * @return data
+	 */
 	public static List<Stock> getData() {
 		return data;
 	}
 
 	private static List<String> header = new ArrayList<String>();
 	
+	/**
+	 * Metodo che restituisce header
+	 * @return header
+	 */
 	public static List<String> getHeader() {
 		return header;
 	}
 
+	/**
+	 * Metodo che imposta il valore di header
+	 * @param header
+	 */
 	public static void setHeader(List<String> header) {
 		ParserTSV.header = header;
 	}
-
+	/**
+	 * 
+	 * @param s
+	 */
 	public static void addStock(Stock s) {
 		data.add(s);
 	}
-
+	/**
+	 * 
+	 * @throws IOException
+	 */
 	public static void parserDataSet () throws IOException{
 		
 	BufferedReader TSVFile = new BufferedReader(new FileReader("data.tsv"));

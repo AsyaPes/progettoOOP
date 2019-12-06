@@ -9,9 +9,18 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.univpm.projectoop.utils.ParserTSV;
 import org.univpm.projectoop.utils.Utils;
 
+/**
+ * 
+ * @author Asya Pesaresi e Lorenzo Vagnini
+ *
+ */
 @SpringBootApplication
 public class ProgettoOopApplication {
 
+	/**
+	 * 
+	 * @param args
+	 */
 	public static void main(String[] args)
 	{
 

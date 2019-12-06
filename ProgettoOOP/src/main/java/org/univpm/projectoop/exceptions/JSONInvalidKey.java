@@ -4,11 +4,17 @@ import org.json.simple.JSONObject;
 
 public class JSONInvalidKey extends JSONInvalidFilter {
 	
+	/**
+	 * 
+	 */
 	@Override
 	public String getMessage() {
 		return "Errore, chiave del filtro non valida.";
 	}
 
+	/**
+	 * 
+	 */
 	public JSONObject getJSONError() {
 		JSONObject error = new JSONObject();
 

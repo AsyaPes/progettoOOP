@@ -14,6 +14,11 @@ import org.univpm.projectoop.exceptions.JSONInvalidValue;
 import org.univpm.projectoop.utils.ParserTSV;
 import org.univpm.projectoop.utils.Utils;
 
+/**
+ * 
+ * @author Asya Pesaresi e Lorenzo Vagnini
+ *
+ */
 public class Stock {
 
 	public String unit;
@@ -22,6 +27,14 @@ public class Stock {
 	public String geo;
 	public List <Integer> time;
 	
+	/**
+	 * 
+	 * @param unit
+	 * @param product
+	 * @param indic_nrg
+	 * @param geo
+	 * @param time
+	 */
 	public Stock(String unit,int product,String indic_nrg,String geo,List <Integer> time) {
 		
 		this.unit = unit;
@@ -31,50 +44,97 @@ public class Stock {
 		this.time = time;
 	}
 
+	/**
+	 * Costruttore della classe Stock
+	 */
 	public Stock() {
-
+		
 	}
-
+	
+	/**
+	 * Metodo che restituisce unit
+	 * @return unit
+	 */
 	public String getUnit() {
 		return unit;
 	}
-
+	/**
+	 * Metodo che restituisce product
+	 * @return product
+	 */
 	public int getProduct() {
 		return product;
 	}
 
+	/**
+	 * Metodo che restituisce Indic_nrg
+	 * @return Indic_nrg
+	 */
 	public String getIndic_nrg() {
 		return indic_nrg;
 	}
 
+	/**
+	 * Metodo che restituisce Geo
+	 * @return Geo
+	 */
 	public String getGeo() {
 		return geo;
 	}
 
+	/**
+	 * Metodo che restituisce Time
+	 * @return Time
+	 */
 	public List<Integer> getTime() {
 		return time;
 	}
 
+	/**
+	 * Metodo che imposta il valore di unit
+	 * @param unit
+	 */
 	public void setUnit(String unit) {
 		this.unit = unit;
 	}
 
+	/**
+	 * Metodo che imposta il valore di Product
+	 * @param product
+	 */
 	public void setProduct(int product) {
 		this.product = product;
 	}
 
+	/**
+	 * Metodo che imposta il valore di indic_nrg
+	 * @param indic_nrg
+	 */
 	public void setIndic_nrg(String indic_nrg) {
 		this.indic_nrg = indic_nrg;
 	}
 
+	/**
+	 * Metodo che imposta il valore di geo
+	 * @param geo
+	 */
 	public void setGeo(String geo) {
 		this.geo = geo;
 	}
 
+	/**
+	 * Metodo che imposta il valore di time
+	 * @param time
+	 */
 	public void setTime(List<Integer> time) {
 		this.time = time;
 	}
 	
+	/**
+	 * 
+	 * @param value
+	 * @return
+	 */
 	public Object getValueByName(String value)  
 	{
 		switch(value)
@@ -102,6 +162,11 @@ public class Stock {
 		return null;
 	}
 	
+	/**
+	 * 
+	 * @param JSONFilters
+	 * @return
+	 */
 	public boolean Filter(JSONObject JSONFilters)
 	{
 		
@@ -320,7 +385,14 @@ public class Stock {
 		
 		return true;
 }
-		
+	
+	/**
+	 * 
+	 * @param field
+	 * @param number_1
+	 * @param number_2
+	 * @return
+	 */
 	private boolean BetweenNumberControl(String field, Object number_1, Object number_2)
 	{
 	
@@ -334,7 +406,13 @@ public class Stock {
 			|| this.equalNameControl(field, min)
 			|| this.equalNameControl(field, max);
 	}
-
+	
+	/**
+	 * 
+	 * @param variable
+	 * @param valueToCheck
+	 * @return
+	 */
 	private boolean GreaterNumberControl(String variable, Object valueToCheck)
 	{
 		List<String> header = Utils.getNumericFields();
@@ -352,6 +430,12 @@ public class Stock {
 		return false;
 	}
 
+	/**
+	 * 
+	 * @param variable
+	 * @param valueToCheck
+	 * @return
+	 */
 	private boolean LowerNumberControl(String variable, Object valueToCheck)
 	{
 
@@ -370,6 +454,13 @@ public class Stock {
 		return false;
 	}
 
+	/**
+	 * 
+	 * @param variable
+	 * @param valueToCheck
+	 * @return
+	 * @throws JSONInvalidValue
+	 */
 	private boolean ContainsNameControl(String variable, Object valueToCheck) throws JSONInvalidValue {
 	
 		List<String> validFields = Utils.getStringFields();
@@ -393,11 +484,12 @@ public class Stock {
 		return false;
 	}
 
-	
-	
-	
-	
-
+	/**
+	 * 
+	 * @param variable
+	 * @param valueToCheck
+	 * @return
+	 */
 	private boolean equalNameControl(String variable, Object valueToCheck)  {
 		
 		List<String> validFields = Utils.getValidFields();
@@ -436,4 +528,3 @@ public class Stock {
 			return false;
 	}
 }
-
