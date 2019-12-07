@@ -9,7 +9,7 @@ import java.util.List;
 import org.univpm.projectoop.dataset.Stock;
 
 /**
- * 
+ * Classe astratta contenente i metodi per il parsing dei dati
  * @author Asya Pesaresi e Lorenzo Vagnini
  *
  */

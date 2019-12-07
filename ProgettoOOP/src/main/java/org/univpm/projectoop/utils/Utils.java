@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.Map;
 
 /**
- * 
+ * Classe contenente le funzioni di utilizzo generico
  * @author Asya Pesaresi e Lorenzo Vagnini
  *
  */
@@ -33,7 +33,7 @@ public class Utils {
 	public static InputStream in;
 	
 	/**
-	 * 
+	 * Metodo che apre la connessione per il download del file TSV
 	 * @throws IOException
 	 */
     public static void openConnection() throws IOException
@@ -43,7 +43,7 @@ public class Utils {
     }
  
     /**
-     * 
+     * Metodo che chiude la connessione
      * @throws IOException
      */
 	public static void closeConnection() throws IOException
@@ -147,10 +147,9 @@ public class Utils {
 	}
 	
 	/**
-	 * 
-	 * @return
+	 * Metodo che restituisce i campi di tipo numerico validi 
+	 * @return lista di campi numerici validi
 	 */
-	//lista campi numerici
 	public static ArrayList<String> getNumericFields()
 	{	
 		ArrayList<String> validFields = new ArrayList<String>();
@@ -163,10 +162,9 @@ public class Utils {
 	}
 	
 	/**
-	 * 
-	 * @return
+	 * Metodo che restituisce i campi di tipo stringa validi
+	 * @return campi validi tipo stringa
 	 */
-	//lista campi stringhe
 	public static ArrayList<String> getStringFields()
 	{	
 		ArrayList<String> validFields = new ArrayList<String>();
@@ -177,10 +175,9 @@ public class Utils {
 	}
 	
 	/**
-	 * 
-	 * @return
+	 * Metodo che restituisce la lista dei campi validi	per il filtraggio	
+	 * @return lista campi validi
 	 */
-	//lista campi validi
 	public static ArrayList<String> getValidFields()
 	{	
 		ArrayList<String> validFields = new ArrayList<String>();
@@ -196,8 +193,8 @@ public class Utils {
 	}
 	
 	/**
-	 * 
-	 * @param filterJSON
+	 * Metodo che controlla se il filtro in formato JSON è valido
+	 * @param filterJSON   filtro in JSON
 	 * @throws JSONInvalidKey
 	 * @throws JSONInvalidValue
 	 */

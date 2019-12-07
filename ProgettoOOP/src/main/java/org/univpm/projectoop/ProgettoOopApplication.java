@@ -18,7 +18,7 @@ import org.univpm.projectoop.utils.Utils;
 public class ProgettoOopApplication {
 
 	/**
-	 * 
+	 * Metodo Main
 	 * @param args
 	 */
 	public static void main(String[] args)
