@@ -28,7 +28,7 @@ public class Stock {
 	public List <Integer> time;
 	
 	/**
-	 * 
+	 * Costruttore della classe Stock
 	 * @param unit
 	 * @param product
 	 * @param indic_nrg
@@ -131,9 +131,9 @@ public class Stock {
 	}
 	
 	/**
-	 * 
-	 * @param value
-	 * @return
+	 * Metodo che restituisce il valore di una variabile passandogli il suo nome
+	 * @param value 
+	 * @return null
 	 */
 	public Object getValueByName(String value)  
 	{
@@ -163,9 +163,9 @@ public class Stock {
 	}
 	
 	/**
-	 * 
+	 * Metodo che applica il filtro passatogli cone argomento
 	 * @param JSONFilters
-	 * @return
+	 * @return true se l'operazione riesce
 	 */
 	public boolean Filter(JSONObject JSONFilters)
 	{
@@ -387,11 +387,11 @@ public class Stock {
 }
 	
 	/**
-	 * 
+	 * Metodo che controlla che un numero sia compreso tra 2 valori dati
 	 * @param field
 	 * @param number_1
 	 * @param number_2
-	 * @return
+	 * @return true se la condizione è soddisfatta
 	 */
 	private boolean BetweenNumberControl(String field, Object number_1, Object number_2)
 	{
@@ -408,10 +408,10 @@ public class Stock {
 	}
 	
 	/**
-	 * 
+	 * Metodo che controlla che il numero passato sia maggiore di quello dato
 	 * @param variable
 	 * @param valueToCheck
-	 * @return
+	 * @return true se la condizione è soddisfatta
 	 */
 	private boolean GreaterNumberControl(String variable, Object valueToCheck)
 	{
@@ -431,10 +431,10 @@ public class Stock {
 	}
 
 	/**
-	 * 
+	 * Metodo che controlla che il numero passato sia minore di quello dato
 	 * @param variable
 	 * @param valueToCheck
-	 * @return
+	 * @return true se la condizione è soddisfatta
 	 */
 	private boolean LowerNumberControl(String variable, Object valueToCheck)
 	{
@@ -455,7 +455,7 @@ public class Stock {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param variable
 	 * @param valueToCheck
 	 * @return

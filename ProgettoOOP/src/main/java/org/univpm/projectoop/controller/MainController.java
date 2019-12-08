@@ -21,7 +21,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
- * 
+ * CLasse del Controller principale
  * @author Asya Pesaresi e Lorenzo Vagnini
  *
  */

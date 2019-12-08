@@ -52,9 +52,9 @@ public class Utils {
 	}
 
 	/**
-	 * 
-	 * @param url
-	 * @return
+	 * Metodo che genera il file JSON a partire dall' url passatogli come argomento
+	 * @param url link da scaricare in formato string
+	 * @return json Oggetto JSON risultante dal download
 	 * @throws IOException
 	 * @throws ParseException
 	 */
@@ -98,8 +98,8 @@ public class Utils {
     }
 
     /**
-     * 
-     * @param url
+     * Metodo che scarica il file TSV prendendo come argomento l'url fornito
+     * @param url link sotto forma di stringa
      * @throws IOException
      */
     private static void downloadTSVFromURL(String url) throws IOException{
@@ -284,7 +284,7 @@ public class Utils {
 	}
 	
 	/**
-	 * 
+	 * Metodo che controlla la correttezza dei filtri sui valori stringa
 	 * @param key
 	 * @param value
 	 * @throws JSONInvalidKey
@@ -325,7 +325,7 @@ public class Utils {
 	}
 	
 	/**
-	 * 
+	 * Metodo che controlla la correttezza dei filtri sui valori numerici
 	 * @param key
 	 * @param value
 	 * @throws JSONInvalidKey
@@ -370,7 +370,7 @@ public class Utils {
 	}
 	
 	/**
-	 * 
+	 * Metodo che controlla la correttezza dei filtri di tipo logico
 	 * @param key
 	 * @param value
 	 * @throws JSONInvalidKey
@@ -397,12 +397,11 @@ public class Utils {
 	}
 	
 	/**
-	 * 
-	 * @param ht
+	 * Metodo che restituisce un oggetto JSONArray contenente i dati analitici dell'hashmap passatagli come argomento
+	 * @param ht hashmap
 	 * @param field
-	 * @return
+	 * @return json finale con dati analitici
 	 */
-	// restituisce un oggetto JSONArray contenente i dati analitici dell'hashmap passatagli come argomento
 	public static JSONObject getJSONAnalyticsString( Map<String, Integer> ht, String field )
 	{
 		JSONObject finalJSON = new JSONObject();

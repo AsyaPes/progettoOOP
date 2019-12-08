@@ -92,7 +92,7 @@ public class FilterNumber {
 	}
 	
 	/**
-	 * 
+	 * Metodo che aggiorna la somma dopo aver aggiunto un valore
 	 * @param value
 	 */
 	private void setSum(Integer value) //Somma un valore

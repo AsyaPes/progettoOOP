@@ -18,7 +18,7 @@ public abstract class ParserTSV {
 	private static List<Stock> data = new ArrayList<Stock>();
 	
 	/**
-	 * Metodo che restituisce data
+	 * Metodo che restituisce il dataset
 	 * @return data
 	 */
 	public static List<Stock> getData() {
@@ -28,7 +28,7 @@ public abstract class ParserTSV {
 	private static List<String> header = new ArrayList<String>();
 	
 	/**
-	 * Metodo che restituisce header
+	 * Metodo che restituisce l' header del file
 	 * @return header
 	 */
 	public static List<String> getHeader() {
@@ -43,14 +43,14 @@ public abstract class ParserTSV {
 		ParserTSV.header = header;
 	}
 	/**
-	 * 
-	 * @param s
+	 * Metodo che aggiunge un elemento al dataset
+	 * @param s elemento da aggiungere al dataset
 	 */
 	public static void addStock(Stock s) {
 		data.add(s);
 	}
 	/**
-	 * 
+	 * Metodo che parsa il dataset
 	 * @throws IOException
 	 */
 	public static void parserDataSet () throws IOException{

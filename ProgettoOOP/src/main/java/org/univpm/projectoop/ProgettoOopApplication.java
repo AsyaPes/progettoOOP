@@ -10,7 +10,7 @@ import org.univpm.projectoop.utils.ParserTSV;
 import org.univpm.projectoop.utils.Utils;
 
 /**
- * 
+ * Applicazione principale per avviare il progetto
  * @author Asya Pesaresi e Lorenzo Vagnini
  *
  */
