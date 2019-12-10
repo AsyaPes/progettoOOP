@@ -25,12 +25,48 @@ Per ottenere tutte le informazioni si utilizza una API REST GET che permette di:
 * Restituire delle statistiche sui dati specificando l'attributo da prendere in considerazione.
 
 Il JSON rappresentante i metadati si presenta sotto questa forma:
-screen metadati
+
+```javascript
+{
+    "id": "urn:jsonschema:org:univpm:projectoop:dataset:Stock",
+    "type": "object",
+    "properties": {
+        "geo": {
+            "type": "string"
+        },
+        "unit": {
+            "type": "string"
+        },
+        "product": {
+            "type": "integer"
+        },
+        "indic_nrg": {
+            "type": "string"
+        },
+        "time": {
+            "type": "array",
+            "items": {
+                "type": "integer"
+            }
+        }
+    }
+}
+```
+
 
 -----
 
 Il JSON rappresentante un singolo elemento del dataset si presenta sotto questa forma:
-screen dati
+
+```javascript
+{
+    "unit": "GWH",
+    "product": 6000,
+    "indic_nrg": "B_190300",
+    "geo": "AT",
+    "time": [2225, 1718, 1833, 1282, 1589, 1750, 2592, 2610, 2916, 3058, 2679, 2971, 1546, … ]
+}
+```
 
 -----
 
@@ -40,25 +76,53 @@ Per i dati di tipo stringa si puo' calcolare il numero di occorrenze di ogni sin
 
 Il JSON rappresentante le statistiche si presenta sotto questa forma:
 
-Screen stats
+```javascript
+{
+"Dati":[
+  {
+    "Dati":[
+      { "Contatore": 30, "Valore": "GWH" }
+    ],
+    "Tipo": "String",
+    "Attributo": "Unit"
+  },
+  {
+    "Dati":{
+      "Somma": 180000,
+      "DeviazioneStandard": 0,
+      "Conteggio": 30,
+      "Massimo": 6000,
+      "Media": 6000,
+      "Minimo": 6000
+    },
+    "Tipo": "Integer",
+    "Attributo": "Product"
+  },
+  {
+    "Dati":[
+      {"Contatore": 30, "Valore": "B_190500"}
+    ],
+    "Tipo": "String",
+    "Attributo": "Indic_nrg"
+  }
+  ...
+}
+```
 
 -----
 ## Route dell'applicazione
 
-* Route che restituisce informazioni sui dati caricati dal dataset:
+* Route che restituisce i dati del dataset in formato JSON:
 >**GET** /
 
 * Route che restituisce i metadati in formato JSON:
->**GET** /metadata
+>**GET** /getMetadata
 
-* Route che restituisce i dati del dataset in formato JSON:
->**GET** /full
+* Route che restituisce il JSON contenente le analisi sui dati dell'intero dataset:
+>**GET** /getFilteredData
 
-* Route che restituisce le analisi sui dati JSON:
->**GET** /analytics
-
-* Route che mostra i dati recuperati dal TSV, eventulmente filtrati, sotto forma di JSON.
->**POST** /analytics
+* Route che restituisce il JSON contenente le analisi sui dati dell'intero dataset:
+>**POST** /getFilteredData
 
 -----
 
