@@ -25,14 +25,18 @@ Per ottenere tutte le informazioni si utilizza una API REST GET che permette di:
 * Restituire delle statistiche sui dati specificando l'attributo da prendere in considerazione.
 
 Il JSON rappresentante i metadati si presenta sotto questa forma:
-screenmetadati
+screen metadati
+
 -----
 
 Il JSON rappresentante un singolo elemento del dataset si presenta sotto questa forma:
 screen dati
+
 -----
 
-Le statistiche posso essere possono essere rilevate su una specifica categoria
+Le statistiche posso essere possono essere rilevate su ogni specifica categoria. Per i dati di tipo numerico si possono calcolare Somma, Massimo, Minimo, Media, Deviazione Standard e Numero degli elementi.
+Per i dati di tipo stringa si puo' calcolare il numero di occorrenze di ogni singola stringa.
+
 Operatori logici:
 
 |Operatore|Descrizione|Esempio|
@@ -55,6 +59,9 @@ Operatori condizionali:
 |$lt|<|{"salary": {"$lt": 10000}}|
 |$lte|<=|{"salary": {"$lte": 10000}}|
 
+Il JSON rappresentante le statistiche si presenta sotto questa forma:
+
+Screen stats
 
 -----
 ## Route dell'applicazione
