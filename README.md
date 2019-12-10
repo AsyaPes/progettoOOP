@@ -34,8 +34,41 @@ screen dati
 
 -----
 
-Le statistiche posso essere possono essere rilevate su ogni specifica categoria. Per i dati di tipo numerico si possono calcolare Somma, Massimo, Minimo, Media, Deviazione Standard e Numero degli elementi.
+Le statistiche posso essere rilevate su ogni specifica categoria.
+Per i dati di tipo numerico si possono calcolare Somma, Massimo, Minimo, Media, Deviazione Standard e Numero degli elementi.
 Per i dati di tipo stringa si puo' calcolare il numero di occorrenze di ogni singola stringa.
+
+Il JSON rappresentante le statistiche si presenta sotto questa forma:
+
+Screen stats
+
+-----
+## Route dell'applicazione
+
+* Route che restituisce informazioni sui dati caricati dal dataset:
+>**GET** /
+
+* Route che restituisce i metadati in formato JSON:
+>**GET** /metadata
+
+* Route che restituisce i dati del dataset in formato JSON:
+>**GET** /full
+
+* Route che restituisce le analisi sui dati JSON:
+>**GET** /analytics
+
+* Route che mostra i dati recuperati dal TSV, eventulmente filtrati, sotto forma di JSON.
+>**POST** /analytics
+
+
+## Applicazione dei filtri
+
+Per applicare dei filtri al dataset bisogna inserire i filtri nel corpo della richiesta POST che è una stringa formato JSON composta da oggetti così strutturati:
+
+screen richiesta post con filtri
+
+I filtri possono essere applicati ai campi riportati in tabella precedentemente.
+I filtri applicabili sono i seguenti:
 
 Operatori logici:
 
@@ -58,23 +91,3 @@ Operatori condizionali:
 |$gt|>|{"salary": {"$gt": 10000}}|
 |$lt|<|{"salary": {"$lt": 10000}}|
 |$lte|<=|{"salary": {"$lte": 10000}}|
-
-Il JSON rappresentante le statistiche si presenta sotto questa forma:
-
-Screen stats
-
------
-## Route dell'applicazione
-
-* Route che restituisce informazioni sui dati caricati dal dataset:
->**GET** /
-
-* Route che restituisce i metadati in formato JSON:
->**GET** /metadata
-
-* Route che restituisce i dati del dataset in formato JSON:
->**GET** /full
-
-* Route che restituisce le analisi sui dati JSON:
->**GET** /analytics
-
