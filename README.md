@@ -6,10 +6,68 @@ L'applicazione da noi sviluppata presente nella repository è un progetto Java c
 Il file contiene tutti i dati riguardanti la produzione di energia elettrica, suddivisi per mese e anno, dei paesi dell'Unione Europea.
 Il dataset è contenuto al seguente indirizzo URL : https://ec.europa.eu/eurostat/estat-navtree-portlet-prod/BulkDownloadListing?file=data/nrg_ind_342m.tsv.gz&unzip=true.
 
+Categorie dei dati presi in considerazione:
+
+|Campo|Descrizione|
+|-|-|
+|Unit|Unità di misura(GWH)|
+|Product|uuuu|
+|Indic_nrg|indice|
+|Geo|Nazione|
+|Time|Anno e mese |
+
 -----
 ## Funzionamento del Progetto
-L'aaplicazione crea un server locale tramite SpringBoot all'indirizzo http://localhost:8080.
+L'applicazione crea un server locale tramite SpringBoot all'indirizzo http://localhost:8080.
 Per ottenere tutte le informazioni si utilizza una API REST GET che permette di:
 * Restituire i metadati (elenco attributi e tipo).
 * Restituire i dati (integralmente o filtrati).
 * Restituire delle statistiche sui dati specificando l'attributo da prendere in considerazione.
+
+Il JSON rappresentante i metadati si presenta sotto questa forma:
+screenmetadati
+-----
+
+Il JSON rappresentante un singolo elemento del dataset si presenta sotto questa forma:
+screen dati
+-----
+
+Le statistiche posso essere possono essere rilevate su una specifica categoria
+Operatori logici:
+
+|Operatore|Descrizione|Esempio|
+|-|-|-|
+|$or|Operatore logico "or"|{"$or": [ { "field" : "value"},{"field" : "value" } ] }|
+|$and|Operatore logico "and"|{"$and": [ {"field" : "value"},{"field" : "value"} ] }|
+|$in|Abbina ogni elemento con lo stesso valore|	{"field" : { "$in" : [value]}}|
+|$nin|Abbina ogni elemento che non ha un determinato valore|{"field" : { "$nin" : [value]}}|
+|$not|Operatore logico "not|{"field" : {"$not" : val}}|
+
+
+
+Operatori condizionali:
+
+|Operatore|Descrizione|Esempio|
+|-|-|-|
+|$bt|>=value <=|{"field" : {"$bt" : [value1, value2]}}|
+|$gte|>=|{"salary": {"$gte": 10000}}|
+|$gt|>|{"salary": {"$gt": 10000}}|
+|$lt|<|{"salary": {"$lt": 10000}}|
+|$lte|<=|{"salary": {"$lte": 10000}}|
+
+
+-----
+## Route dell'applicazione
+
+* Route che restituisce informazioni sui dati caricati dal dataset:
+>**GET** /
+
+* Route che restituisce i metadati in formato JSON:
+>**GET** /metadata
+
+* Route che restituisce i dati del dataset in formato JSON:
+>**GET** /full
+
+* Route che restituisce le analisi sui dati JSON:
+>**GET** /analytics
+
