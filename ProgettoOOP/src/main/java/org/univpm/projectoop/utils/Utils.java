@@ -62,7 +62,19 @@ public class Utils {
     public static JSONObject getJSONFromURL(String url) throws IOException, ParseException {
         StringBuilder sb = new StringBuilder();
         int currentChar;
-        try(InputStream is = new URL(url).openStream()) {
+        
+        // Reindirizzamento URL
+        URL urlObj = new URL(url);
+        URLConnection connection = (HttpURLConnection)urlObj.openConnection();
+    	// Se è presente l'header "Location", seguo in auomatico il redirect.
+        if( connection.getHeaderField("Location") != null )
+    	{
+    		urlObj = new URL( connection.getHeaderField("Location") );
+    		connection = (HttpURLConnection)urlObj.openConnection();
+    	}
+        
+    	
+        try(InputStream is = connection.getInputStream()) {
             BufferedReader br = new BufferedReader(new InputStreamReader(is));
             //ReadLine
             while ((currentChar = br.read()) != -1){
@@ -87,7 +99,7 @@ public class Utils {
         for(Object resource : data){
             if(resource instanceof JSONObject){
                 JSONObject jsonResource = (JSONObject) resource;
-                if(((String)jsonResource.get("format")).contains("TSV")){
+                if(((String)jsonResource.get("description")).equals("Download dataset in TSV format (unzipped)")){
                     try {
                         downloadTSVFromURL(((String)jsonResource.get("url")));
                     } catch (IOException e) {
@@ -228,9 +240,7 @@ public class Utils {
 						Object key2 = keys2[j];
 						Object value2 = filterValue.get(key2);
 						
-						if(((String)k).equals("Unit")
-								|| ((String)k).equals("Indic_nrg")
-								|| ((String)k).equals("Geo"))
+						if( Utils.getStringFields().contains( ((String)k) ) )
 						{
 							Utils.checkSingleFilterString(key2, value2);
 						}else
@@ -242,7 +252,7 @@ public class Utils {
 										
 					}
 			
-				
+					continue;
 				
 				// $or e $and
 			}else if(k instanceof String && (((String)k).equals("$or") || ((String)k).equals("$and")) )
@@ -276,7 +286,8 @@ public class Utils {
 							}
 							
 						}
-						
+
+						continue;
 			}
 			
 			throw new JSONInvalidKey();
