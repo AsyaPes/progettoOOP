@@ -3,7 +3,7 @@ package org.univpm.projectoop.exceptions;
 import org.json.simple.JSONObject;
 
 /**
- * Sottoclasse della superclasse JSONInvalidFilter
+ * Sottoclasse della superclasse JSONInvalidFilter che gestisce gli errori sulle chiavi
  * @author Asya Pesaresi e Lorenzo Vagnini
  *
  */
@@ -18,7 +18,7 @@ public class JSONInvalidKey extends JSONInvalidFilter {
 	}
 
 	/**
-	 * Metodo che assegna il messaggio all'oggetto error di tipo JSON
+	 * Metodo che restituisce un JSONObject contenente l'errore
 	 */
 	public JSONObject getJSONError() {
 		JSONObject error = new JSONObject();

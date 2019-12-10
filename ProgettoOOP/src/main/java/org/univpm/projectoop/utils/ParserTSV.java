@@ -28,7 +28,7 @@ public abstract class ParserTSV {
 	private static List<String> header = new ArrayList<String>();
 	
 	/**
-	 * Metodo che restituisce l' header del file
+	 * Metodo che restituisce l'header del file
 	 * @return header
 	 */
 	public static List<String> getHeader() {
@@ -51,7 +51,7 @@ public abstract class ParserTSV {
 	}
 	/**
 	 * Metodo che parsa il dataset
-	 * @throws IOException
+	 * @throws IOException Errori di Input/Output
 	 */
 	public static void parserDataSet () throws IOException{
 		
@@ -103,9 +103,9 @@ public abstract class ParserTSV {
 		
 		addStock(s);
 		
-		dataRow = TSVFile.readLine(); // Read next line of data.
+		dataRow = TSVFile.readLine(); //Legge la linea successiva
 	}
-	// Close the file once all data has been read.
+	// Chiude il file una volta che tutti i dati sono stati letti
 	TSVFile.close();
 
 

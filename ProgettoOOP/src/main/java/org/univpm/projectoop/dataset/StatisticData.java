@@ -12,14 +12,19 @@ import org.univpm.projectoop.utils.FilterNumber;
 import org.univpm.projectoop.utils.ParserTSV;
 import org.univpm.projectoop.utils.Utils;
 
+/**
+ * Classe che applica le stats sui dati
+ * @author Asya Pesaresi e Lorenzo Vagnini
+ *
+ */
 public class StatisticData {
 	
 	List<Stock> stocks = new ArrayList<Stock>();
 	
 	/**
-	 * 
-	 * @param stocks
-	 * @return
+	 * Metodo che applica le stats a stocks
+	 * @param stocks Lista di oggeti di tipo Stock
+	 * @return stats JSONObject contenente i dati analizzati
 	 */
 	@SuppressWarnings("unchecked")
 	public static JSONObject statsMethod(List<Stock> stocks)
@@ -85,10 +90,10 @@ public class StatisticData {
 	}
 	
 	/**
-	 * 
+	 * Metodo che conta le ripetizioni delle singole stringhe
 	 * @param value
-	 * @param h
-	 * @return
+	 * @param h hashmap contenente la stringa come chiave e il numero di ripetizioni come valore
+	 * @return h hashmap
 	 */
 	private static Map<String,Integer> analyzeUniqueStrings(String value,Map<String,Integer> h)
 	{
@@ -99,9 +104,9 @@ public class StatisticData {
 			h.put(value, newCount);
 		}
 		else 
-		{
-			h.put(value, 1);
-		}
+			{
+				h.put(value, 1);
+			}
 		return h;
 	}
 }

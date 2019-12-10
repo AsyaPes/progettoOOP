@@ -3,7 +3,7 @@ package org.univpm.projectoop.exceptions;
 import org.json.simple.JSONObject;
 
 /**
- * Sottoclasse della classe Exception
+ * Sottoclasse della classe Exception che gestisce gli errori di parsing
  * @author Asya Pesaresi e Lorenzo Vagnini
  *
  */
@@ -18,7 +18,7 @@ public class JSONParsingError extends Exception {
 	}
 
 	/**
-	 * Metodo che assegna il messaggio all'oggetto error di tipo JSON
+	 * Metodo che restituisce un JSONObject contenente l'errore
 	 * @return oggetto JSON error
 	 */
 	public JSONObject getJSONError() {

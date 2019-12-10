@@ -21,7 +21,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
- * CLasse del Controller principale
+ * Classe che restituisce i risultati delle operazioni delle altre classi
  * @author Asya Pesaresi e Lorenzo Vagnini
  *
  */

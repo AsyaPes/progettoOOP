@@ -8,7 +8,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 /**
- * Classe dedicata alla gestione delle statistiche sui dati
+ * Classe dedicata alla gestione delle statistiche di tipo numerico sui dati
  * @author Asya Pesaresi e Lorenzo Vagnini
  *
  */
@@ -95,7 +95,7 @@ public class FilterNumber {
 	 * Metodo che aggiorna la somma dopo aver aggiunto un valore
 	 * @param value
 	 */
-	private void setSum(Integer value) //Somma un valore
+	private void setSum(Integer value)
 	{
 		sum+=value;
 	}
@@ -172,8 +172,8 @@ public class FilterNumber {
 
 	/**
 	 * Metodo che restituisce le stats sotto forma di oggetto JSON
-	 * @param field
-	 * @return numDataObject 
+	 * @param field Attributo di tipo stringa
+	 * @return numDataObject JSONObject contenente le stats
 	 */
 	public JSONObject getJSONAnalyticsNumeric( String field )
 	{

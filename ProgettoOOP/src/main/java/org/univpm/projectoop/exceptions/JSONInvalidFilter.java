@@ -3,7 +3,7 @@ package org.univpm.projectoop.exceptions;
 import org.json.simple.JSONObject;
 
 /**
- * CLasse di errore Filtro non valido
+ * Classe di errore Filtro non valido che estende la classe di errore generico Exception
  * @author Asya Pesaresi e Lorenzo Vagnini
  *
  */
@@ -18,7 +18,7 @@ public class JSONInvalidFilter extends Exception {
 	}
 
 	/**
-	 * Metodo che assegna il messaggio all'oggetto error di tipo JSON
+	 * Metodo che restituisce un JSONObject contenente l'errore
 	 * @return oggetto JSON error
 	 */
 	public JSONObject getJSONError() {

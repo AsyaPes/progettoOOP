@@ -34,7 +34,7 @@ public class Utils {
 	
 	/**
 	 * Metodo che apre la connessione per il download del file TSV
-	 * @throws IOException
+	 * @throws IOException Eccezioni input/output
 	 */
     public static void openConnection() throws IOException
     {
@@ -44,7 +44,7 @@ public class Utils {
  
     /**
      * Metodo che chiude la connessione
-     * @throws IOException
+     * @throws IOException Eccezioni input/output
      */
 	public static void closeConnection() throws IOException
 	{
@@ -52,11 +52,12 @@ public class Utils {
 	}
 
 	/**
-	 * Metodo che genera il file JSON a partire dall' url passatogli come argomento
+	 * Metodo che si riferisce al file JSON  dell' url
+	 * passatogli come argomento e genera il JSON Object
 	 * @param url link da scaricare in formato string
 	 * @return json Oggetto JSON risultante dal download
-	 * @throws IOException
-	 * @throws ParseException
+	 * @throws IOException Eccezioni input/output
+	 * @throws ParseException Errori di parsing
 	 */
     public static JSONObject getJSONFromURL(String url) throws IOException, ParseException {
         StringBuilder sb = new StringBuilder();
@@ -77,8 +78,8 @@ public class Utils {
     }
 
     /**
-     * 
-     * @param json
+     * Metodo che effettua il parsing del JSON e scarica i link che contengono TSV
+     * @param json Oggetto JSON parsato per recuperare il link del TSV da scaricare
      */
     public static void downloadTSVfromJSON(JSONObject json){
         JSONObject result = (JSONObject) json.get("result");
@@ -100,7 +101,7 @@ public class Utils {
     /**
      * Metodo che scarica il file TSV prendendo come argomento l'url fornito
      * @param url link sotto forma di stringa
-     * @throws IOException
+     * @throws IOException Eccezioni input/output
      */
     private static void downloadTSVFromURL(String url) throws IOException{
         if(!Files.exists(Paths.get("data.tsv"))){
@@ -122,10 +123,11 @@ public class Utils {
     }
 
     /**
-     * 
+     * Metodo che effettua il parsing delle stringhe 
      * @param stringa
-     * @return
-     * @throws JSONParsingError
+     * @return null se la stringa è vuota
+     * @return parsedJSON JSONObject contenente tutte le stringhe parsate 
+     * @throws JSONParsingError Errori nel parsing del file JSON
      */
 	public static JSONObject parseJSONString(String stringa) throws JSONParsingError
 	{
@@ -195,8 +197,8 @@ public class Utils {
 	/**
 	 * Metodo che controlla se il filtro in formato JSON è valido
 	 * @param filterJSON   filtro in JSON
-	 * @throws JSONInvalidKey
-	 * @throws JSONInvalidValue
+	 * @throws JSONInvalidKey Errori nel controllo delle chiavi
+	 * @throws JSONInvalidValue Errori nel controllo dei valori annessi
 	 */
 	public static void checkFilterJSON(JSONObject filterJSON) throws JSONInvalidKey, JSONInvalidValue
 	{
@@ -285,10 +287,10 @@ public class Utils {
 	
 	/**
 	 * Metodo che controlla la correttezza dei filtri sui valori stringa
-	 * @param key
-	 * @param value
-	 * @throws JSONInvalidKey
-	 * @throws JSONInvalidValue
+	 * @param key Object che contiene la chiave
+	 * @param value Object che contiene il valore
+	 * @throws JSONInvalidKey Errori nel controllo delle chiavi
+	 * @throws JSONInvalidValue Errori nel controllo dei valori annessi
 	 */
 	private static void checkSingleFilterString(Object key, Object value) throws JSONInvalidKey, JSONInvalidValue {
 		if(key instanceof String ) 
@@ -326,10 +328,10 @@ public class Utils {
 	
 	/**
 	 * Metodo che controlla la correttezza dei filtri sui valori numerici
-	 * @param key
-	 * @param value
-	 * @throws JSONInvalidKey
-	 * @throws JSONInvalidValue
+	 * @param key Object che contiene la chiave 
+	 * @param value Object che contiene il valore
+	 * @throws JSONInvalidKey Errori nel controllo delle chiavi
+	 * @throws JSONInvalidValue Errori nel controllo dei valori annessi
 	 */
 	private static void checkSingleFilterNumber(Object key, Object value) throws JSONInvalidKey, JSONInvalidValue {
 		if(key instanceof String ) 
@@ -370,11 +372,11 @@ public class Utils {
 	}
 	
 	/**
-	 * Metodo che controlla la correttezza dei filtri di tipo logico
-	 * @param key
-	 * @param value
-	 * @throws JSONInvalidKey
-	 * @throws JSONInvalidValue
+	 * Metodo che controlla che la chiave sia stringa e il valore sia stringa o numero
+	 * @param key Object contenente la chiave
+	 * @param value Object contenente il valore
+	 * @throws JSONInvalidKey Errori nel controllo delle chiavi
+	 * @throws JSONInvalidValue Errori nel controllo dei valori annessi
 	 */
 	private static void checkLogicalFilter(Object key, Object value) throws JSONInvalidKey, JSONInvalidValue
 	{
@@ -399,7 +401,7 @@ public class Utils {
 	/**
 	 * Metodo che restituisce un oggetto JSONArray contenente i dati analitici dell'hashmap passatagli come argomento
 	 * @param ht hashmap
-	 * @param field
+	 * @param field Attributo di tipo stringa
 	 * @return json finale con dati analitici
 	 */
 	public static JSONObject getJSONAnalyticsString( Map<String, Integer> ht, String field )

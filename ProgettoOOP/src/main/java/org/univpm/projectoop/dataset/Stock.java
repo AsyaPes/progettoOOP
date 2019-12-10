@@ -15,7 +15,7 @@ import org.univpm.projectoop.utils.ParserTSV;
 import org.univpm.projectoop.utils.Utils;
 
 /**
- * 
+ * Classe 
  * @author Asya Pesaresi e Lorenzo Vagnini
  *
  */
@@ -45,7 +45,7 @@ public class Stock {
 	}
 
 	/**
-	 * Costruttore della classe Stock
+	 * Costruttore vuoto della classe Stock
 	 */
 	public Stock() {
 		
@@ -132,8 +132,9 @@ public class Stock {
 	
 	/**
 	 * Metodo che restituisce il valore di una variabile passandogli il suo nome
-	 * @param value 
+	 * @param value Stringa con nome degli indici stringa
 	 * @return null
+	 * @return valore dell'attributo corrispondente	
 	 */
 	public Object getValueByName(String value)  
 	{
@@ -163,8 +164,8 @@ public class Stock {
 	}
 	
 	/**
-	 * Metodo che applica il filtro passatogli cone argomento
-	 * @param JSONFilters
+	 * Metodo che applica i filtri che gli sono passati come argomento
+	 * @param JSONFilters Filtri JSON
 	 * @return true se l'operazione riesce
 	 */
 	public boolean Filter(JSONObject JSONFilters)
@@ -240,7 +241,7 @@ public class Stock {
 				
 				}
 				
-				// CICLO PER OGNI CHIAVE -> CONTROLLIAMO I VALUE DEL FILTRO CON I VALORI DELL'OGGETTO CORRENTE
+				//CONTROLLIAMO I VALUE DEL FILTRO CON I VALORI DELL'OGGETTO CORRENTE PER OGNI CHIAVE
 				
 			}else{
 				
@@ -389,8 +390,8 @@ public class Stock {
 	/**
 	 * Metodo che controlla che un numero sia compreso tra 2 valori dati
 	 * @param field
-	 * @param number_1
-	 * @param number_2
+	 * @param number_1 Oggetto contenente il primo numero
+	 * @param number_2 Oggetto contenente il secondo  numero
 	 * @return true se la condizione è soddisfatta
 	 */
 	private boolean BetweenNumberControl(String field, Object number_1, Object number_2)
@@ -409,7 +410,7 @@ public class Stock {
 	
 	/**
 	 * Metodo che controlla che il numero passato sia maggiore di quello dato
-	 * @param variable
+	 * @param variable Stringa del valore di index contenente il valore da controllare
 	 * @param valueToCheck
 	 * @return true se la condizione è soddisfatta
 	 */
@@ -432,7 +433,7 @@ public class Stock {
 
 	/**
 	 * Metodo che controlla che il numero passato sia minore di quello dato
-	 * @param variable
+	 * @param variable Stringa del valore di index contenente il valore da controllare
 	 * @param valueToCheck
 	 * @return true se la condizione è soddisfatta
 	 */
@@ -455,11 +456,11 @@ public class Stock {
 	}
 
 	/**
-	 *
+	 *Metodo che controlla se il valore è all'interno dell'oggetto
 	 * @param variable
 	 * @param valueToCheck
-	 * @return
-	 * @throws JSONInvalidValue
+	 * @return true se la condizione è verificata
+	 * @throws JSONInvalidValue Errori sui valori
 	 */
 	private boolean ContainsNameControl(String variable, Object valueToCheck) throws JSONInvalidValue {
 	
@@ -485,10 +486,10 @@ public class Stock {
 	}
 
 	/**
-	 * 
+	 * Metodo che controlla se due stringhe sono uguali
 	 * @param variable
 	 * @param valueToCheck
-	 * @return
+	 * @return true se la condizione è verificata
 	 */
 	private boolean equalNameControl(String variable, Object valueToCheck)  {
 		
