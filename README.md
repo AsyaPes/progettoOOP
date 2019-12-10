@@ -11,8 +11,8 @@ Categorie dei dati presi in considerazione:
 |Campo|Descrizione|
 |-|-|
 |Unit|Unità di misura(GWH)|
-|Product|uuuu|
-|Indic_nrg|indice|
+|Product|Codice Prodotto|
+|Indic_nrg|Indice|
 |Geo|Nazione|
 |Time|Anno e mese |
 
@@ -25,15 +25,117 @@ Per ottenere tutte le informazioni si utilizza una API REST GET che permette di:
 * Restituire delle statistiche sui dati specificando l'attributo da prendere in considerazione.
 
 Il JSON rappresentante i metadati si presenta sotto questa forma:
-screenmetadati
+
+```javascript
+{
+    "id": "urn:jsonschema:org:univpm:projectoop:dataset:Stock",
+    "type": "object",
+    "properties": {
+        "geo": {
+            "type": "string"
+        },
+        "unit": {
+            "type": "string"
+        },
+        "product": {
+            "type": "integer"
+        },
+        "indic_nrg": {
+            "type": "string"
+        },
+        "time": {
+            "type": "array",
+            "items": {
+                "type": "integer"
+            }
+        }
+    }
+}
+```
+
+
 -----
 
 Il JSON rappresentante un singolo elemento del dataset si presenta sotto questa forma:
-screen dati
+
+```javascript
+{
+    "unit": "GWH",
+    "product": 6000,
+    "indic_nrg": "B_190300",
+    "geo": "AT",
+    "time": [2225, 1718, 1833, 1282, 1589, 1750, 2592, 2610, 2916, 3058, 2679, 2971, 1546, … ]
+}
+```
+
 -----
 
-Le statistiche posso essere possono essere rilevate su una specifica categoria
-Operatori logici:
+Le statistiche posso essere rilevate su ogni specifica categoria.
+Per i dati di tipo numerico si possono calcolare Somma, Massimo, Minimo, Media, Deviazione Standard e Numero degli elementi.
+Per i dati di tipo stringa si puo' calcolare il numero di occorrenze di ogni singola stringa.
+
+Il JSON rappresentante le statistiche si presenta sotto questa forma:
+
+```javascript
+{
+"Dati":[
+  {
+    "Dati":[
+      { "Contatore": 30, "Valore": "GWH" }
+    ],
+    "Tipo": "String",
+    "Attributo": "Unit"
+  },
+  {
+    "Dati":{
+      "Somma": 180000,
+      "DeviazioneStandard": 0,
+      "Conteggio": 30,
+      "Massimo": 6000,
+      "Media": 6000,
+      "Minimo": 6000
+    },
+    "Tipo": "Integer",
+    "Attributo": "Product"
+  },
+  {
+    "Dati":[
+      {"Contatore": 30, "Valore": "B_190500"}
+    ],
+    "Tipo": "String",
+    "Attributo": "Indic_nrg"
+  }
+  ...
+}
+```
+
+-----
+## Route dell'applicazione
+
+* Route che restituisce i dati del dataset in formato JSON:
+>**GET** /
+
+* Route che restituisce i metadati in formato JSON:
+>**GET** /getMetadata
+
+* Route che restituisce il JSON contenente le analisi sui dati dell'intero dataset:
+>**GET** /getFilteredData
+
+* Route che restituisce il JSON contenente le analisi sui dati dell'intero dataset:
+>**POST** /getFilteredData
+
+-----
+
+## Applicazione dei filtri
+
+Per applicare dei filtri al dataset bisogna inserire i filtri nel corpo della richiesta POST che è una stringa formato JSON composta da oggetti così strutturati:
+
+screen richiesta post con filtri
+
+I filtri possono essere applicati ai campi riportati in tabella precedentemente.
+I filtri applicabili sono i seguenti:
+
+### Operatori logici:
 
 |Operatore|Descrizione|Esempio|
 |-|-|-|
@@ -45,7 +147,7 @@ Operatori logici:
 
 
 
-Operatori condizionali:
+### Operatori condizionali:
 
 |Operatore|Descrizione|Esempio|
 |-|-|-|
@@ -54,20 +156,3 @@ Operatori condizionali:
 |$gt|>|{"salary": {"$gt": 10000}}|
 |$lt|<|{"salary": {"$lt": 10000}}|
 |$lte|<=|{"salary": {"$lte": 10000}}|
-
-
------
-## Route dell'applicazione
-
-* Route che restituisce informazioni sui dati caricati dal dataset:
->**GET** /
-
-* Route che restituisce i metadati in formato JSON:
->**GET** /metadata
-
-* Route che restituisce i dati del dataset in formato JSON:
->**GET** /full
-
-* Route che restituisce le analisi sui dati JSON:
->**GET** /analytics
-
