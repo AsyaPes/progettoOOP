@@ -11,8 +11,8 @@ Categorie dei dati presi in considerazione:
 |Campo|Descrizione|
 |-|-|
 |Unit|Unità di misura(GWH)|
-|Product|uuuu|
-|Indic_nrg|indice|
+|Product|Codice Prodotto|
+|Indic_nrg|Indice|
 |Geo|Nazione|
 |Time|Anno e mese |
 
@@ -60,6 +60,7 @@ Screen stats
 * Route che mostra i dati recuperati dal TSV, eventulmente filtrati, sotto forma di JSON.
 >**POST** /analytics
 
+-----
 
 ## Applicazione dei filtri
 
@@ -70,7 +71,7 @@ screen richiesta post con filtri
 I filtri possono essere applicati ai campi riportati in tabella precedentemente.
 I filtri applicabili sono i seguenti:
 
-Operatori logici:
+### Operatori logici:
 
 |Operatore|Descrizione|Esempio|
 |-|-|-|
@@ -82,7 +83,7 @@ Operatori logici:
 
 
 
-Operatori condizionali:
+### Operatori condizionali:
 
 |Operatore|Descrizione|Esempio|
 |-|-|-|
