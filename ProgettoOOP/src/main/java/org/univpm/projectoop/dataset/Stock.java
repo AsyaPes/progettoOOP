@@ -15,7 +15,7 @@ import org.univpm.projectoop.utils.ParserTSV;
 import org.univpm.projectoop.utils.Utils;
 
 /**
- * Classe 
+ * Classe che memorizza i dati delle singole entità
  * @author Asya Pesaresi e Lorenzo Vagnini
  *
  */
@@ -129,11 +129,10 @@ public class Stock {
 	public void setTime(List<Integer> time) {
 		this.time = time;
 	}
-	
+
 	/**
 	 * Metodo che restituisce il valore di una variabile passandogli il suo nome
 	 * @param value Stringa con nome degli indici stringa
-	 * @return null
 	 * @return valore dell'attributo corrispondente	
 	 */
 	public Object getValueByName(String value)  
@@ -504,9 +503,9 @@ public class Stock {
 			
 			case "Unit": return (valueToCheck instanceof String && ((String)valueToCheck).equals(this.getUnit()));
 			
-			case "Indic_nrg": return(valueToCheck instanceof String && ((String)valueToCheck).equals(this.getUnit()));
+			case "Indic_nrg": return(valueToCheck instanceof String && ((String)valueToCheck).equals(this.getIndic_nrg()));
 			
-			case "Geo": return(valueToCheck instanceof String && ((String)valueToCheck).equals(this.getUnit()));
+			case "Geo": return(valueToCheck instanceof String && ((String)valueToCheck).equals(this.getGeo()));
 		
 		}
 		
