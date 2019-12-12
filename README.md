@@ -121,7 +121,7 @@ Il JSON rappresentante le statistiche si presenta sotto questa forma:
 * Route che restituisce il JSON contenente le analisi sui dati dell'intero dataset:
 >**GET** /getFilteredData
 
-* Route che restituisce il JSON contenente le analisi sui dati dell'intero dataset:
+* Route che restituisce il JSON contenente le analisi sui dati filtrati:
 >**POST** /getFilteredData
 
 -----
