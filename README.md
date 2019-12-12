@@ -166,7 +166,7 @@ I filtri applicabili sono i seguenti:
 -----
 ## DIAGRAMMI UML
 ### Diagramma delle classi:
-descrive il tipo degli oggetti che compongono il sistema e le relazioni statiche esistenti tra loro
+Descrive il tipo degli oggetti che compongono il sistema e le relazioni statiche esistenti tra loro.
 
 ![](Diagramma_classi.png)
 
