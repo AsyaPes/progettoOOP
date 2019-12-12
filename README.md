@@ -156,3 +156,17 @@ I filtri applicabili sono i seguenti:
 |$gt|>|{"salary": {"$gt": 10000}}|
 |$lt|<|{"salary": {"$lt": 10000}}|
 |$lte|<=|{"salary": {"$lte": 10000}}|
+
+La richiesta POST contiene al suo interno il filtro. Ogni filtro è un oggetto JSON di tipo stringa strutturato come segue:
+
+```javascript
+{
+    "<campo>": {
+	    "<operatore>": <dato>
+	}
+}
+```
+-----
+## DIAGRAMMI UML
+### Diagramma delle classi:
+![Diagramma UML](/
