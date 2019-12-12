@@ -170,3 +170,6 @@ La richiesta POST contiene al suo interno il filtro. Ogni filtro è un oggetto J
 ## DIAGRAMMI UML
 ### Diagramma delle classi:
 ![](Diagramma_classi.png)
+
+### Diagramma dei casi d'uso:
+![](Diagramma_casiuso.png)
