@@ -130,7 +130,13 @@ Il JSON rappresentante le statistiche si presenta sotto questa forma:
 
 Per applicare dei filtri al dataset bisogna inserire i filtri nel corpo della richiesta POST che è una stringa formato JSON composta da oggetti così strutturati:
 
-screen richiesta post con filtri
+```javascript
+{
+    "<campo>": {
+	    "<operatore>": <dato>
+	}
+}
+```
 
 I filtri possono essere applicati ai campi riportati in tabella precedentemente.
 I filtri applicabili sono i seguenti:
@@ -157,15 +163,6 @@ I filtri applicabili sono i seguenti:
 |$lt|<|{"salary": {"$lt": 10000}}|
 |$lte|<=|{"salary": {"$lte": 10000}}|
 
-La richiesta POST contiene al suo interno il filtro. Ogni filtro è un oggetto JSON di tipo stringa strutturato come segue:
-
-```javascript
-{
-    "<campo>": {
-	    "<operatore>": <dato>
-	}
-}
-```
 -----
 ## DIAGRAMMI UML
 ### Diagramma delle classi:
