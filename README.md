@@ -169,7 +169,18 @@ La richiesta POST contiene al suo interno il filtro. Ogni filtro è un oggetto J
 -----
 ## DIAGRAMMI UML
 ### Diagramma delle classi:
+descrive il tipo degli oggetti che compongono il sistema e le relazioni statiche esistenti tra loro
+
 ![](Diagramma_classi.png)
 
 ### Diagramma dei casi d'uso:
+Si tratta di un diagramma che esprime un comportamento,desiderato o offerto.
+Individua chi o che cosa ha a che fare con il sistema(attore) e che cosa l’attore può fare (caso d’uso).
+
 ![](Diagramma_casiuso.png)
+
+### Diagramma delle sequenze:
+Un diagramma di sequenza è un diagramma previsto dall'UML utilizzato per descrivere una determinata sequenza di azioni in cui tutte le scelte sono state già effettuate; in pratica nel diagramma non compaiono scelte, né flussi alternativi.
+
+![](Diagramma_casiuso.png)
+
