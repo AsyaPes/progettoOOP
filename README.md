@@ -181,3 +181,8 @@ Un diagramma di sequenza è un diagramma previsto dall'UML utilizzato per descri
 
 ![](Diagramma_delle_sequenze.png)
 
+-----
+## Documentazione
+
+La documentazione si trova nel file index.html nella cartella doc.
+![](Javadoc.png) 
